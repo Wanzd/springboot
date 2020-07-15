@@ -21,10 +21,10 @@ require(['jquery', 'easyui', 'common', 'tree', 'db'], function(jquery, easyui,
 			$("#menu").tree({
 				id : "id",
 				parentField : "pid",
-				url : "ai/system/menu/default/queryList",
+				url : "menuRest/root",
 				onClick : main.tabMenu,
 				formatter : function(node) {
-					var s = node.text;
+					var s = node.cn;
 					if (node.children) {
 						s += ' <span style=\'color:blue\'>('
 								+ node.children.length + ')</span>';
@@ -54,7 +54,7 @@ require(['jquery', 'easyui', 'common', 'tree', 'db'], function(jquery, easyui,
 			$.ajax({
 				type : "post",
 				contentType : "application/json",
-				url : "ai/system/menu/default/queryList",
+				url : "menuRest/queryList",
 				data : JSON.stringify({
 							pid : treeItem.id
 						}),

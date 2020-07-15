@@ -11,4 +11,8 @@ public class StringX {
 		return JSON.toJSONString(in);
 	}
 
+	public static String obj2json(Object obj) {
+		return JSON.toJSONString(obj);
+	}
+
 }

@@ -22,8 +22,8 @@ require([ 'jquery', 'easyui', 'common', 'tree', 'db' ], function(jquery,
 			$("#menu").tree({
 				id : "id",
 				text : "cn",
-				pIdKey : "parentId",
-				url : "common/ra/menu/tree",
+				pIdKey : "pid",
+				url : "menuRest/root",
 				onClick : main.tabMenu
 			});
 		},
