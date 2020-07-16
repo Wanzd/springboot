@@ -4,8 +4,11 @@ import java.util.Date;
 
 import javax.inject.Named;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pd.businessobject.MapVO;
 import com.pd.common.calobject.TimerCO;
+import com.pd.common.util.StringX;
 import com.pd.standard.itf.ITask;
 
 @Named
@@ -23,6 +26,7 @@ public class SariParseTodayTask implements ITask {
 		// business.process(fo);
 		// return timer.end();
 		timer.end();
-		return timer;
+		String preStr = StringX.obj2json(timer);
+		return preStr;
 	}
 }

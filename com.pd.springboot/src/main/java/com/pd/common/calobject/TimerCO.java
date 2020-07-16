@@ -19,8 +19,7 @@ public class TimerCO {
 		end = new Date();
 	}
 
-	public String getUsedTime() {
-		long useTime = end.getTime() - start.getTime();
-		return String.format("%s end: use time %dms.", name, useTime);
+	public long getUsedTime() {
+		return end.getTime() - start.getTime();
 	}
 }

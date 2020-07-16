@@ -6,6 +6,33 @@
 	<select id="queryInfo" resultType="com.pd.businessobject.MapVO">
 select 'a' as "a.b",
 	'b' as "b.c",
-	'c' as "c.d.e"
+	'c' as "c.d.e",
+	1.345 as "d",
+	sysdate as "e"
 	</select>
+	
+	<select id="queryList" resultType="com.pd.businessobject.MapVO">
+select 'a' as "a.b",
+	'b' as "b.c",
+	'c' as "c.d.e",
+	1.345 as "d",
+	sysdate as "e"
+from dual
+	</select>
+	
+	<insert id="insert" >
+		<selectKey resultType="java.lang.Long" order="BEFORE" keyProperty="fid">
+SELECT test_s.NEXTVAL FROM DUAL
+		</selectKey>
+insert into test_t(
+	fid,
+	code,
+	name
+)
+values(
+		#{fid},
+		#{code},
+		#{name}
+)
+	</insert>
 </mapper>
