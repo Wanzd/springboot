@@ -20,4 +20,15 @@ public interface IStandardService<FO, VO> extends IQueryInfoAction<FO, VO>, IQue
 		IStandardDao<FO, VO> dao = ReflectUtil.getField(this, "dao", IStandardDao.class);
 		return dao.queryList(fo);
 	}
+
+	default int insertList(List<VO> list) throws BusinessException {
+		IStandardDao<FO, VO> dao = ReflectUtil.getField(this, "dao", IStandardDao.class);
+		return dao.insertList(list);
+	}
+
+	default int delete(VO vo) throws BusinessException {
+		IStandardDao<FO, VO> dao = ReflectUtil.getField(this, "dao", IStandardDao.class);
+		return dao.delete(vo);
+	}
+
 }
