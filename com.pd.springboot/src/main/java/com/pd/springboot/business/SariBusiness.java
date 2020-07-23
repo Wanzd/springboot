@@ -3,10 +3,10 @@ package com.pd.springboot.business;
 import java.util.Date;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.collections4.ListUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.pd.base.exception.BusinessException;
 import com.pd.builderobject.SariInsertListBuilder;
@@ -18,9 +18,9 @@ import com.pd.springboot.service.SariBaseService;
 
 @Named
 public class SariBusiness {
-	@Inject
+	@Autowired
 	private SariBaseService baseService;
-	@Inject
+	@Autowired
 	private IAppSariDao dao;
 
 	public void process(MapVO fo) throws BusinessException {
