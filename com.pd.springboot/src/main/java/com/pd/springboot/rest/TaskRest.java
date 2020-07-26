@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pd.springboot.SpringUtil;
 import com.pd.standard.itf.ITask;
+import com.pd.standard.itf.TaskEnum;
 
 /**
  * 集成系统
@@ -20,9 +21,12 @@ public class TaskRest {
 	@RequestMapping(value = "/{taskName}")
 	@ResponseBody
 	public Object intergration(@PathVariable String taskName) {
+		// if (TaskEnum.valueOf(taskName) == null) {
+		// return "Not api task:" + taskName;
+		// }
 		ITask task = SpringUtil.getBean(taskName, ITask.class);
 		if (task == null) {
-			return "not impl task:" + taskName;
+			return "Not impl task:" + taskName;
 		}
 		return task.process();
 	}

@@ -61,7 +61,6 @@ define(['ai$echart'], function() {
 						tooltip : {
 							confine : true,
 							formatter : function(list, vo) {
-								debugger;
 								title = list.value[2]['location'] + "<p/>"
 										+ list.value[2]['company'] + "<p/>"
 										+ list.value[2]['jobName'] + "<p/>"
