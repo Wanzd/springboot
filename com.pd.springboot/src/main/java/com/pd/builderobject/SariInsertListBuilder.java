@@ -5,13 +5,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.pd.base.exception.BusinessException;
 import com.pd.businessobject.MapVO;
 import com.pd.standard.itf.IBuilder;
 
 public class SariInsertListBuilder implements IBuilder<List<MapVO>, List<MapVO>> {
 
 	@Override
-	public List<MapVO> build(List<MapVO> in) {
+	public List<MapVO> build(List<MapVO> in) throws BusinessException {
 		List<MapVO> rsList = new ArrayList<>();
 		for (MapVO eachVO : in) {
 			rsList.addAll(buildNationList(eachVO));
@@ -22,7 +23,7 @@ public class SariInsertListBuilder implements IBuilder<List<MapVO>, List<MapVO>>
 		return rsList;
 	}
 
-	private Collection<? extends MapVO> buildCityList(MapVO fo) {
+	private Collection<? extends MapVO> buildCityList(MapVO fo) throws BusinessException {
 		IBuilder<MapVO, List<MapVO>> parseBean = null;
 		switch (fo.str("parseBean")) {
 		case "html":
@@ -34,7 +35,7 @@ public class SariInsertListBuilder implements IBuilder<List<MapVO>, List<MapVO>>
 		return parseBean.build(fo);
 	}
 
-	private Collection<? extends MapVO> buildProvinceList(MapVO fo) {
+	private Collection<? extends MapVO> buildProvinceList(MapVO fo) throws BusinessException {
 		IBuilder<MapVO, List<MapVO>> parseBean = null;
 		switch (fo.str("parseBean")) {
 		case "html":
@@ -46,7 +47,7 @@ public class SariInsertListBuilder implements IBuilder<List<MapVO>, List<MapVO>>
 		return parseBean.build(fo);
 	}
 
-	private Collection<? extends MapVO> buildNationList(MapVO fo) {
+	private Collection<? extends MapVO> buildNationList(MapVO fo) throws BusinessException {
 		IBuilder<MapVO, List<MapVO>> parseBean = null;
 		switch (fo.str("parseBean")) {
 		case "html":

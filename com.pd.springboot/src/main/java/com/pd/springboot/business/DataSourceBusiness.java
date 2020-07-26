@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.pd.base.exception.BusinessException;
 import com.pd.businessobject.MapVO;
 import com.pd.common.calobject.DataSourceObjBuilder;
 import com.pd.common.calobject.DataSourceTreeGridBuilder;
@@ -19,7 +20,7 @@ public class DataSourceBusiness {
 	@Inject
 	private SysDataSourceService service;
 
-	public Object query(MapVO fo) {
+	public Object query(MapVO fo) throws BusinessException {
 		MapVO map = service.queryInfo(fo);
 		if (map == null) {
 			return null;

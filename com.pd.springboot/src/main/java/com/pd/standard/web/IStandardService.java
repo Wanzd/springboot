@@ -4,30 +4,38 @@ import java.util.List;
 
 import com.pd.base.exception.BusinessException;
 import com.pd.common.util.ReflectUtil;
-import com.pd.standard.itf.IQueryInfoAction;
-import com.pd.standard.itf.IQueryListAction;
+import com.pd.standard.itf.IDeleteOperation;
+import com.pd.standard.itf.IInsertListOperation;
+import com.pd.standard.itf.IQueryInfoOperation;
+import com.pd.standard.itf.IQueryListOperation;
 
-public interface IStandardService<FO, VO> extends IQueryInfoAction<FO, VO>, IQueryListAction<FO, VO> {
+public interface IStandardService<FO, VO> extends IQueryInfoOperation<FO, VO>, IQueryListOperation<FO, VO> {
 
 	@Override
 	default VO queryInfo(FO fo) throws BusinessException {
-		IStandardDao<FO, VO> dao = ReflectUtil.getField(this, "dao", IStandardDao.class);
+		IQueryInfoOperation<FO, VO> dao = ReflectUtil.firstExistField(this, IQueryInfoOperation.class, "dao");
 		return dao.queryInfo(fo);
 	}
 
 	@Override
+	default String queryJson(FO fo) throws BusinessException {
+		IQueryInfoOperation<FO, VO> dao = ReflectUtil.firstExistField(this, IQueryInfoOperation.class, "dao");
+		return dao.queryJson(fo);
+	}
+
+	@Override
 	default List<VO> queryList(FO fo) throws BusinessException {
-		IStandardDao<FO, VO> dao = ReflectUtil.getField(this, "dao", IStandardDao.class);
+		IQueryListOperation<FO, VO> dao = ReflectUtil.firstExistField(this, IQueryListOperation.class, "dao");
 		return dao.queryList(fo);
 	}
 
 	default int insertList(List<VO> list) throws BusinessException {
-		IStandardDao<FO, VO> dao = ReflectUtil.getField(this, "dao", IStandardDao.class);
+		IInsertListOperation<VO> dao = ReflectUtil.firstExistField(this, IInsertListOperation.class, "dao");
 		return dao.insertList(list);
 	}
 
 	default int delete(VO vo) throws BusinessException {
-		IStandardDao<FO, VO> dao = ReflectUtil.getField(this, "dao", IStandardDao.class);
+		IDeleteOperation<VO> dao = ReflectUtil.firstExistField(this, IDeleteOperation.class, "dao");
 		return dao.delete(vo);
 	}
 

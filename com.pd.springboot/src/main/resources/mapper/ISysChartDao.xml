@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pd.springboot.dao.ISysChartDao">
-	<select id="queryJson" resultType="java.lang.String">
+	<select id="queryJson" resultType="string">
 select json_data "jsonData"
 from sys_chart_t
 where id=#{fo.id,jdbcType=VARCHAR}
 	</select>
 	
-	<select id="query" resultType="java.lang.String">
+	<select id="queryInfo" resultType="MapVO">
 select id "id",
 	datasource_id "dataSourceId",
 	chart_type "chartType",
@@ -21,7 +21,7 @@ select id "id",
 from sys_chart_t
 where id=#{fo.id,jdbcType=VARCHAR}
 	</select>
-	<select id="queryList" resultType="com.pd.businessobject.MapVO">
+	<select id="queryList" resultType="MapVO">
 select id "id",
 	datasource_id "dataSourceId",
 	chart_type "chartType",

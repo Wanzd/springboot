@@ -8,17 +8,17 @@ import com.pd.base.exception.BusinessException;
 import com.pd.businessobject.SysMenuFO;
 import com.pd.businessobject.SysMenuVO;
 import com.pd.common.util.StringX;
-import com.pd.springboot.service.MenuService;
+import com.pd.springboot.dao.ISysMenuDao;
 import com.pd.standard.web.IStandardRest;
 
 @RestController
 @RequestMapping("menuRest")
 public class MenuRest implements IStandardRest<SysMenuFO, SysMenuVO> {
 	@Autowired
-	MenuService service;
+	private ISysMenuDao dao;
 
 	@RequestMapping("/root")
 	public String root() throws BusinessException {
-		return StringX.from(service.queryList(new SysMenuFO()));
+		return StringX.from(dao.queryList(new SysMenuFO()));
 	}
 }
