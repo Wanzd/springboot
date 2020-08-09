@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
@@ -111,5 +112,29 @@ public class StringX {
 			return defaultValue;
 		}
 		return str;
+	}
+
+	public static String between(String target, String fromStr, String toStr) {
+		int startIdx = target.indexOf(fromStr);
+		if (startIdx < 0) {
+			return null;
+		}
+		String tmpStr = target.substring(startIdx + fromStr.length());
+		int endIdx = tmpStr.indexOf(toStr);
+		if (endIdx < 0) {
+			return null;
+		}
+		tmpStr = tmpStr.substring(0, endIdx);
+		return tmpStr;
+	}
+
+	public static <T> List<T> toList(String str, Class<T> outClass) {
+		try {
+			return JSON.parseArray(str, outClass);
+		} catch (Exception e) {
+			System.out.println("StringX.toList start:" + str);
+			System.out.println("StringX.toList failed:" + e.getMessage());
+		}
+		return null;
 	}
 }
