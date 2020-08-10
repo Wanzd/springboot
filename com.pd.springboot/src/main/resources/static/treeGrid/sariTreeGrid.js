@@ -145,12 +145,12 @@ var treeGridCols = [[{
 			width : 120,
 			rowspan : 2
 		}, {
-			title : '确诊',
-			colspan : 3,
+			title : '存量',
+			colspan : 4,
 			rowspan : 1,
 			align : 'right'
 		}, {
-			title : '存量',
+			title : '死亡',
 			colspan : 4,
 			rowspan : 1,
 			align : 'right'
@@ -160,8 +160,8 @@ var treeGridCols = [[{
 			rowspan : 1,
 			align : 'right'
 		}, {
-			title : '死亡',
-			colspan : 4,
+			title : '确诊',
+			colspan : 3,
 			rowspan : 1,
 			align : 'right'
 		}, {
@@ -200,180 +200,178 @@ var treeGridCols = [[{
 				return Number(day).toFixed(1);
 			}
 		}], [{
-			title : '新增',
-			field : 'cntAdd',
-			width : 50,
-			rowspan : 1,
-			align : 'right',
-			styler : treeGridImpl.cnt.style,
-			formatter : function(value, vo) {
-				return vo.cnt - vo.cnt1;
-			}
-		}, {
-			title : '新增率',
-			field : 'cntIncrRate',
-			width : 50,
-			rowspan : 1,
-			align : 'right',
-			styler : treeGridImpl.cnt.style,
-			formatter : function(value, vo) {
-				if (vo.cnt == 0) {
-					return '-100.0%';
-				}
-				if (vo.cnt1 == 0) {
-					return '100.0%';
-				}
-				var percent = Number((vo.cnt - vo.cnt1) / vo.cnt1 * 100)
-						.toFixed(1)
-						+ "%";
-				return percent;
-			}
-		}, {
-			title : '累计',
-			field : 'cnt',
-			width : 60,
-			rowspan : 1,
-			align : 'right',
-			styler : treeGridImpl.cnt.style,
-			formatter : function(value, vo) {
-				return vo.cnt;
-			}
-		}, {
-			field : 'sickRate',
-			title : '存量率',
-			rowspan : 1,
-			width : 60,
-			align : 'right',
-			formatter : function(value, vo) {
-				if (vo.cnt == 0) {
-					return '<div id="p" class="easyui-progressbar" data-options="value:0" style="width:60px;"></div>';
-				}
-				var rs = Number((vo.cnt - vo.death - vo.heal) / vo.cnt * 100)
-						.toFixed(1);
-				return '<div id="p" class="easyui-progressbar" data-options="value:'
-						+ rs + '" style="width:60px;"></div>';
-			}
-		}, {
-			title : '新增',
-			field : 'sickAdd',
-			width : 50,
-			rowspan : 1,
-			align : 'right',
-			styler : treeGridImpl.sick.style,
-			formatter : function(value, vo) {
-				return vo.sick - vo.sick1;
-			}
-		}, {
-			field : 'sickIncrRate',
-			title : '新增率',
-			width : 50,
-			rowspan : 1,
-			align : 'right',
-			styler : treeGridImpl.sick.style,
-			formatter : function(value, vo) {
-				if (vo.sick == 0) {
-					return '-100.0%';
-				}
-				if (vo.sick1 == 0) {
-					return '100.0%';
-				}
-				var percent = Number((vo.sick - vo.sick1) / vo.sick1 * 100)
-						.toFixed(1)
-						+ "%";
-				return percent;
-			}
-		}, {
-			title : '累计',
-			field : 'sick',
-			width : 60,
-			rowspan : 1,
-			align : 'right',
-			styler : treeGridImpl.sick.style,
-			formatter : function(value, vo) {
-				return vo.sick;
-			}
-		}, {
-			field : 'healRate',
-			title : '治愈率',
-			rowspan : 1,
-			width : 60,
-			align : 'right',
-			formatter : function(value, vo) {
-				if (vo.cnt == 0) {
-					return '<div id="p" class="easyui-progressbar" data-options="value:100" style="width:60px;"></div>';
-				}
-				var rs = Number(vo.heal / vo.cnt * 100).toFixed(1);
-				return '<div id="p" class="easyui-progressbar" data-options="value:'
-						+ rs + '" style="width:60px;"></div>';
-			}
-		}, {
-			title : '新增',
-			field : 'healAdd',
-			width : 50,
-			rowspan : 1,
-			align : 'right',
-			styler : treeGridImpl.heal.style,
-			formatter : function(value, vo) {
-				return vo.heal - vo.heal1;
-			}
-		}, {
-			title : '新增率',
-			field : 'healIncrRate',
-			width : 50,
-			rowspan : 1,
-			align : 'right',
-			styler : treeGridImpl.heal.style,
-			formatter : treeGridImpl.healIncr.formatter
-		}, {
-			title : '累计',
-			field : 'heal',
-			width : 60,
-			rowspan : 1,
-			align : 'right',
-			styler : treeGridImpl.heal.style,
-			formatter : function(value, vo) {
-				return vo.heal;
-			}
-		}, {
-			field : 'deathRate',
-			title : '死亡率',
-			rowspan : 1,
-			width : 60,
-			align : 'right',
-			formatter : function(value, vo) {
-				if (vo.cnt == 0) {
-					return '<div id="p" class="easyui-progressbar" data-options="value:0" style="width:60px;"></div>';
-				}
-				var rs = Number(vo.death / vo.cnt * 100).toFixed(1);
-				return '<div id="p" class="easyui-progressbar" data-options="value:'
-						+ rs + '" style="width:60px;"></div>';
-			}
-		}, {
-			title : '新增',
-			field : 'deathAdd',
-			width : 50,
-			rowspan : 1,
-			align : 'right',
-			styler : treeGridImpl.death.style,
-			formatter : function(value, vo) {
-				return vo.death - vo.death1;
-			}
-		}, {
-			title : '新增率',
-			field : 'deathIncrRate',
-			width : 50,
-			rowspan : 1,
-			align : 'right',
-			styler : treeGridImpl.death.style,
-			formatter : treeGridImpl.deathIncr.formatter
-		}, {
-			title : '累计',
-			field : 'death',
-			width : 50,
-			rowspan : 1,
-			align : 'right',
-			styler : treeGridImpl.death.style,
-			formatter : function(value, vo) {
-				return vo.death;
-			}
-		}]];
+	field : 'sickRate',
+	title : '存量率',
+	rowspan : 1,
+	width : 60,
+	align : 'right',
+	formatter : function(value, vo) {
+		if (vo.cnt == 0) {
+			return '<div id="p" class="easyui-progressbar" data-options="value:0" style="width:60px;"></div>';
+		}
+		var rs = Number((vo.cnt - vo.death - vo.heal) / vo.cnt * 100)
+				.toFixed(1);
+		return '<div id="p" class="easyui-progressbar" data-options="value:'
+				+ rs + '" style="width:60px;"></div>';
+	}
+}, {
+	title : '新增',
+	field : 'sickAdd',
+	width : 50,
+	rowspan : 1,
+	align : 'right',
+	styler : treeGridImpl.sick.style,
+	formatter : function(value, vo) {
+		return vo.sick - vo.sick1;
+	}
+}, {
+	field : 'sickIncrRate',
+	title : '新增率',
+	width : 50,
+	rowspan : 1,
+	align : 'right',
+	styler : treeGridImpl.sick.style,
+	formatter : function(value, vo) {
+		if (vo.sick == 0) {
+			return '-100.0%';
+		}
+		if (vo.sick1 == 0) {
+			return '100.0%';
+		}
+		var percent = Number((vo.sick - vo.sick1) / vo.sick1 * 100).toFixed(1)
+				+ "%";
+		return percent;
+	}
+},  {
+	title : '累计',
+	field : 'sick',
+	width : 60,
+	rowspan : 1,
+	align : 'right',
+	styler : treeGridImpl.sick.style,
+	formatter : function(value, vo) {
+		return vo.sick;
+	}
+},{
+	field : 'deathRate',
+	title : '死亡率',
+	rowspan : 1,
+	width : 60,
+	align : 'right',
+	formatter : function(value, vo) {
+		if (vo.cnt == 0) {
+			return '<div id="p" class="easyui-progressbar" data-options="value:0" style="width:60px;"></div>';
+		}
+		var rs = Number(vo.death / vo.cnt * 100).toFixed(1);
+		return '<div id="p" class="easyui-progressbar" data-options="value:'
+				+ rs + '" style="width:60px;"></div>';
+	}
+}, {
+	title : '新增',
+	field : 'deathAdd',
+	width : 50,
+	rowspan : 1,
+	align : 'right',
+	styler : treeGridImpl.death.style,
+	formatter : function(value, vo) {
+		return vo.death - vo.death1;
+	}
+}, {
+	title : '新增率',
+	field : 'deathIncrRate',
+	width : 50,
+	rowspan : 1,
+	align : 'right',
+	styler : treeGridImpl.death.style,
+	formatter : treeGridImpl.deathIncr.formatter
+}, {
+	title : '累计',
+	field : 'death',
+	width : 50,
+	rowspan : 1,
+	align : 'right',
+	styler : treeGridImpl.death.style,
+	formatter : function(value, vo) {
+		return vo.death;
+	}
+}, {
+	field : 'healRate',
+	title : '治愈率',
+	rowspan : 1,
+	width : 60,
+	align : 'right',
+	formatter : function(value, vo) {
+		if (vo.cnt == 0) {
+			return '<div id="p" class="easyui-progressbar" data-options="value:100" style="width:60px;"></div>';
+		}
+		var rs = Number(vo.heal / vo.cnt * 100).toFixed(1);
+		return '<div id="p" class="easyui-progressbar" data-options="value:'
+				+ rs + '" style="width:60px;"></div>';
+	}
+}, {
+	title : '新增',
+	field : 'healAdd',
+	width : 50,
+	rowspan : 1,
+	align : 'right',
+	styler : treeGridImpl.heal.style,
+	formatter : function(value, vo) {
+		return vo.heal - vo.heal1;
+	}
+}, {
+	title : '新增率',
+	field : 'healIncrRate',
+	width : 50,
+	rowspan : 1,
+	align : 'right',
+	styler : treeGridImpl.heal.style,
+	formatter : treeGridImpl.healIncr.formatter
+}, {
+	title : '累计',
+	field : 'heal',
+	width : 60,
+	rowspan : 1,
+	align : 'right',
+	styler : treeGridImpl.heal.style,
+	formatter : function(value, vo) {
+		return vo.heal;
+	}
+}, {
+	title : '新增',
+	field : 'cntAdd',
+	width : 50,
+	rowspan : 1,
+	align : 'right',
+	styler : treeGridImpl.cnt.style,
+	formatter : function(value, vo) {
+		return vo.cnt - vo.cnt1;
+	}
+}, {
+	title : '新增率',
+	field : 'cntIncrRate',
+	width : 50,
+	rowspan : 1,
+	align : 'right',
+	styler : treeGridImpl.cnt.style,
+	formatter : function(value, vo) {
+		if (vo.cnt == 0) {
+			return '-100.0%';
+		}
+		if (vo.cnt1 == 0) {
+			return '100.0%';
+		}
+		var percent = Number((vo.cnt - vo.cnt1) / vo.cnt1 * 100).toFixed(1)
+				+ "%";
+		return percent;
+	}
+}, {
+	title : '累计',
+	field : 'cnt',
+	width : 60,
+	rowspan : 1,
+	align : 'right',
+	styler : treeGridImpl.cnt.style,
+	formatter : function(value, vo) {
+		return vo.cnt;
+	}
+}]];

@@ -4,13 +4,17 @@ var columns = [{
 			field : 'ck',
 			checkbox : true
 		}, {
-			field : 'name',
-			title : 'Name',
+			field : 'id',
+			title : 'Id',
 			width : 100
 		}, {
-			field : 'remark',
-			title : 'Remark',
-			width : 100
+			field : 'name',
+			title : 'Name',
+			width : 100,
+			formatter : function(value, rowData, rowIndex) {
+				debugger;
+				return '<a href="' + rowData.remark + '" >' + value + '</a>';
+			}
 		}];
 var $pageAtom = {
 	init : function() {
