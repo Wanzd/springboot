@@ -1,21 +1,47 @@
 package com.pd.springboot.rest;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pd.base.exception.BusinessException;
+import com.pd.businessobject.MailVO;
+import com.pd.businessobject.SysMenuFO;
 import com.pd.common.util.StringX;
 import com.pd.springboot.dao.ITestDao;
+import com.pd.springboot.service.MailService;
+import com.pd.springboot.service.MenuService;
 
 @RestController
 @RequestMapping("testRest")
 public class TestRest {
 	@Autowired
 	ITestDao dao;
+	@Autowired
+	MailService mailService;
+	@Autowired
+	MenuService menuService;
 
 	@RequestMapping("/test1")
 	public String root() throws BusinessException {
 		return StringX.obj2json(dao.queryList(null));
+	}
+
+	@RequestMapping("/testMail")
+	public String testMail() throws BusinessException {
+		MailVO mailVO = new MailVO();
+		mailVO.setMailSender("pd_test@163.com");
+		mailVO.setMailTo(Arrays.asList("panda_zdwan@hotmail.com").toArray(new String[0]));
+		mailVO.setSubject("testSubject");
+		mailVO.setMailContent("testContent");
+		mailService.sendMail(mailVO);
+		return "200";
+	}
+
+	@RequestMapping("/testRedis")
+	public Object testRedis() throws BusinessException {
+		return menuService.queryList(new SysMenuFO());
 	}
 }

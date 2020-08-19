@@ -15,7 +15,7 @@ spring:
       suffix: .ftl
       template-loader-path: classpath:/templates/
    redis:
-      database: 0
+      database: 5
       host: localhost
       port: 6379
       password: null
@@ -24,7 +24,24 @@ spring:
          max-wait: -1
          max-idle: 8
          min-idle: 0
-      timeout: 0
+      timeout: 3000
+   mail:
+      from: pd_test@163.com
+      host: smtp.163.com
+      username: pd_test@163.com
+      password: JLQPFNTZVFXWUMJJ
+      default-encoding: UTF-8
+      properties:
+         mail:
+            smtp:
+               auth: true
+               starttls:
+                  enable: true
+                  required: true
+                  
+lance:
+   mail:
+      sender: pd_test@163.com
 server:
    port: 8080
 mybatis:
