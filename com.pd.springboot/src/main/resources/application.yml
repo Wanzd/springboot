@@ -24,7 +24,24 @@ spring:
          max-wait: -1
          max-idle: 8
          min-idle: 0
-      timeout: 10000
+      timeout: 3000
+   mail:
+      from: pd_test@163.com
+      host: smtp.163.com
+      username: pd_test@163.com
+      password: JLQPFNTZVFXWUMJJ
+      default-encoding: UTF-8
+      properties:
+         mail:
+            smtp:
+               auth: true
+               starttls:
+                  enable: true
+                  required: true
+                  
+lance:
+   mail:
+      sender: pd_test@163.com
 server:
    port: 8080
 mybatis:

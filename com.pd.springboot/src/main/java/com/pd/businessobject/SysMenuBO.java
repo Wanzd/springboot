@@ -1,9 +1,11 @@
 package com.pd.businessobject;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 @Data
-public class SysMenuBO {
+public class SysMenuBO implements Serializable{
 	private String pid;
 	private String id;
 	private String cn;
