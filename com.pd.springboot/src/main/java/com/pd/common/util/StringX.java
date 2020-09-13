@@ -137,4 +137,11 @@ public class StringX {
 		}
 		return null;
 	}
+
+	public static String getStr(Object obj) {
+		if (obj == null) {
+			return null;
+		}
+		return obj.toString();
+	}
 }

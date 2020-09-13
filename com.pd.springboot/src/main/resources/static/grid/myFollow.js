@@ -12,7 +12,6 @@ var columns = [{
 			title : 'Name',
 			width : 100,
 			formatter : function(value, rowData, rowIndex) {
-				debugger;
 				return '<a href="' + rowData.remark + '" >' + value + '</a>';
 			}
 		}];
