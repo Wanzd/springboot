@@ -2,6 +2,7 @@ package com.pd.standard.web;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pd.base.exception.BusinessException;
 import com.pd.common.util.ReflectUtil;
 import com.pd.standard.itf.IDeleteOperation;
@@ -25,8 +26,15 @@ public interface IStandardService<FO, VO> extends IQueryInfoOperation<FO, VO>, I
 
 	@Override
 	default List<VO> queryList(FO fo) throws BusinessException {
-		IQueryListOperation<FO, VO> dao = ReflectUtil.firstExistField(this, IQueryListOperation.class, "dao");
-		return dao.queryList(fo);
+		Object field = ReflectUtil.firstExistField(this, "dao");
+		if (field instanceof BaseMapper) {
+			BaseMapper op = (BaseMapper) field;
+			return op.selectList(null);
+		} else if (field instanceof IQueryListOperation) {
+			IQueryListOperation op = (IQueryListOperation) field;
+			return op.queryList(fo);
+		}
+		return null;
 	}
 
 	default int insertList(List<VO> list) throws BusinessException {

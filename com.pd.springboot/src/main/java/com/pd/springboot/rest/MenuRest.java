@@ -19,7 +19,7 @@ public class MenuRest implements IStandardRest<SysMenuFO, SysMenuVO> {
 	private MenuService service;
 
 	@RequestMapping("/root")
-	@Cacheable(value = "redis", key = "menuRoot")
+	//@Cacheable(value = "redis", key = "menuRoot")
 	public String root() throws BusinessException {
 		return StringX.from(service.queryList(new SysMenuFO()));
 	}
