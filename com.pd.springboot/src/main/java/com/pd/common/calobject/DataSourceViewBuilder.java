@@ -6,7 +6,7 @@ import com.pd.base.exception.BusinessException;
 import com.pd.businessobject.MapVO;
 import com.pd.springboot.SpringUtil;
 import com.pd.standard.itf.IBuilder;
-import com.pd.standard.itf.IQueryListOperation;
+import com.pd.standard.itf.IQueryListDao;
 
 public class DataSourceViewBuilder implements IBuilder<MapVO, Object> {
 
@@ -14,7 +14,7 @@ public class DataSourceViewBuilder implements IBuilder<MapVO, Object> {
 	public Object build(MapVO in) throws BusinessException {
 		ApplicationContext ctx = SpringUtil.getContext();
 		String viewName = in.str("detail");
-		IQueryListOperation bean = ctx.getBean("IViewDao", IQueryListOperation.class);
+		IQueryListDao bean = ctx.getBean("IViewDao", IQueryListDao.class);
 		MapVO fo = new MapVO();
 		fo.put("viewName", viewName);
 		return bean.queryList(fo);
