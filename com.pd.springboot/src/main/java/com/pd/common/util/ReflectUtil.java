@@ -1,6 +1,10 @@
 package com.pd.common.util;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReflectUtil {
 
@@ -54,6 +58,27 @@ public class ReflectUtil {
 			if (field != null) {
 				return field;
 			}
+		}
+		return null;
+	}
+
+	/**
+	 * 获取类的静态方法
+	 * 
+	 * @param class1
+	 * @param code
+	 */
+	public static Method getClassMethod(Class cls, String methodName) {
+		Method method;
+		try {
+			Method[] methods = cls.getMethods();
+			List<Method> methodList = Arrays.asList(methods).stream().filter(obj -> obj.getName().equals(methodName))
+					.collect(Collectors.toList());
+			if (methodList.size() > 0) {
+				return methodList.get(0);
+			}
+		} catch (SecurityException e) {
+			e.printStackTrace();
 		}
 		return null;
 	}

@@ -2,21 +2,21 @@ package com.pd.standard.web;
 
 import java.util.List;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pd.base.exception.BusinessException;
+import com.pd.common.enums.OperationEnum;
+import com.pd.common.util.OperationUtil;
 import com.pd.common.util.ReflectUtil;
 import com.pd.standard.itf.IDeleteOperation;
 import com.pd.standard.itf.IInsertListOperation;
 import com.pd.standard.itf.IQueryInfoOperation;
-import com.pd.standard.itf.IQueryListDao;
 import com.pd.standard.itf.IQueryListOperation;
 
 public interface IStandardService<FO, VO> extends IQueryInfoOperation<FO, VO>, IQueryListOperation<FO, VO> {
 
 	@Override
 	default VO queryInfo(FO fo) throws BusinessException {
-		IQueryInfoOperation<FO, VO> dao = ReflectUtil.firstExistField(this, IQueryInfoOperation.class, "dao");
-		return dao.queryInfo(fo);
+		return (VO) OperationUtil.operate(OperationEnum.QUERY_INFO, this, fo);
+
 	}
 
 	@Override
@@ -27,15 +27,7 @@ public interface IStandardService<FO, VO> extends IQueryInfoOperation<FO, VO>, I
 
 	@Override
 	default List<VO> queryList(FO fo) throws BusinessException {
-		Object field = ReflectUtil.firstExistField(this, "dao");
-		if (field instanceof BaseMapper) {
-			BaseMapper op = (BaseMapper) field;
-			return op.selectList(null);
-		} else if (field instanceof IQueryListDao) {
-			IQueryListDao op = (IQueryListDao) field;
-			return op.queryList(fo);
-		}
-		return null;
+		return (List<VO>) OperationUtil.operate(OperationEnum.QUERY_LIST, this, fo);
 	}
 
 	default int insertList(List<VO> list) throws BusinessException {
