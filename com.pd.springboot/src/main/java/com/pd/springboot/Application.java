@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
+import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
+import com.baomidou.mybatisplus.core.injector.ISqlInjector;
 import com.pd.springboot.filter.VirtualFilter;
 
 @SpringBootApplication
@@ -31,5 +33,10 @@ public class Application {
 		FilterRegistrationBean bean = new FilterRegistrationBean(new VirtualFilter());
 		bean.addUrlPatterns("/*");
 		return bean;
+	}
+
+	@Bean
+	public ISqlInjector sqlInjector() {
+		return new DefaultSqlInjector();
 	}
 }

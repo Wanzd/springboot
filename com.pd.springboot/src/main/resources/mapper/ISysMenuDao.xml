@@ -4,47 +4,17 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pd.springboot.dao.ISysMenuDao">
 	<select id="queryList" resultType="SysMenuBO">
-		<include refid="t$data"/>
-	</select>
-	
-	<sql id="t$data">
-select 
-		<include refid='cols$select'/>
-from sys_Menu_t
-		<include refid="filter"/>
-order by sort_id		
-	</sql>
-	
-	<sql id="filter">
-where 1=1
-		<choose>
-			<when test="fo.pid!=null"> and pid =#{fo.pid}</when>
-			<otherwise>and pid is null </otherwise>
-		</choose> 		
-	</sql>
-	
-	<sql id="cols$select">
-	id as "id",
+select id as "id",
 	pid as "pid",
 	name as "cn",
 	url as "url",
 	detail as "detail"
-	</sql>
-	
-	<update id="initTable">
-create table sys_Menu_t(
-	pid varchar2(30),
-	id varchar2(30),
-	name varchar2(50),
-	language varchar2(10),
-	sort_id number,
-	url varchar2(200),
-	active_flag varchar2(1),
-	detail varchar2(100)
-)
-	</update>
-	
-	<update id="initData">
-delete from sys_Menu_t
-	</update>
+from sys_Menu_t
+where 1=1
+		<choose>
+			<when test='fo.pid!=null and fo.pid!=""'> and pid =#{fo.pid,jdbcType=VARCHAR}</when>
+			<otherwise>and pid is null </otherwise>
+		</choose> 	
+order by sort_id		
+	</select>
 </mapper>

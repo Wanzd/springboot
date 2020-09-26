@@ -9,5 +9,4 @@ import com.pd.base.exception.BusinessException;
 public interface IQueryListOperation<FO, DTO> {
 
 	List<DTO> queryList(@Param("fo") FO in) throws BusinessException;
-
 }

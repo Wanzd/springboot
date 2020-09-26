@@ -45,5 +45,11 @@ lance:
 server:
    port: 8080
 mybatis-plus:
+   global-config:
+      db-config: 
+         logic-delete-value: 1
+         logic-not-delete-value: 0
    mapper-locations: classpath*:mapper/*.xml
    type-aliases-package: com.pd.businessobject
+   configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

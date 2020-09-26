@@ -71,7 +71,7 @@ public class ReflectUtil {
 	public static Method getClassMethod(Class cls, String methodName) {
 		Method method;
 		try {
-			Method[] methods = cls.getMethods();
+			Method[] methods = cls.getDeclaredMethods();
 			List<Method> methodList = Arrays.asList(methods).stream().filter(obj -> obj.getName().equals(methodName))
 					.collect(Collectors.toList());
 			if (methodList.size() > 0) {

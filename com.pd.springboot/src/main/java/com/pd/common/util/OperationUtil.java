@@ -5,9 +5,11 @@ import java.lang.reflect.Method;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pd.base.exception.BusinessException;
+import com.pd.businessobject.PageVO;
 import com.pd.common.enums.OperationEnum;
 import com.pd.standard.itf.IQueryInfoOperation;
 import com.pd.standard.itf.IQueryListOperation;
+import com.pd.standard.itf.IQueryPagedListOperation;
 
 /**
  * 控制反转工具
@@ -26,7 +28,7 @@ public class OperationUtil {
 	 * @return Object
 	 * @throws BusinessException
 	 */
-	public static Object operate(OperationEnum op, Object target, Object fo) throws BusinessException {
+	public static Object operate(OperationEnum op, Object target, Object... fo) throws BusinessException {
 		Object field = ReflectUtil.firstExistField(target, "dao,service,business");
 		Method method = ReflectUtil.getClassMethod(OperationUtil.class, op.getCode());
 		if (method == null) {
@@ -51,13 +53,35 @@ public class OperationUtil {
 		return null;
 	}
 
-	public static Object queryInfo(Object target, Object fo) throws BusinessException {
+	private static Object queryInfo(Object target, Object fo) throws BusinessException {
 		if (target instanceof BaseMapper) {
 			BaseMapper op = (BaseMapper) target;
 			return op.selectOne(null);
 		} else if (target instanceof IQueryInfoOperation) {
 			IQueryInfoOperation op = (IQueryInfoOperation) target;
 			return op.queryInfo(fo);
+		}
+		return null;
+	}
+
+	private static Object queryJson(Object target, Object fo) throws BusinessException {
+		if (target instanceof BaseMapper) {
+			BaseMapper op = (BaseMapper) target;
+			return StringX.obj2json(op.selectOne(null));
+		} else if (target instanceof IQueryInfoOperation) {
+			IQueryInfoOperation op = (IQueryInfoOperation) target;
+			return op.queryJson(fo);
+		}
+		return null;
+	}
+
+	private static Object queryPagedList(Object target, Object... fo) throws BusinessException {
+		if (target instanceof BaseMapper) {
+			BaseMapper op = (BaseMapper) target;
+			return StringX.obj2json(op.selectOne(null));
+		} else if (target instanceof IQueryPagedListOperation) {
+			IQueryPagedListOperation op = (IQueryPagedListOperation) target;
+			return op.queryPagedList(fo[0], (PageVO) fo[1]);
 		}
 		return null;
 	}
