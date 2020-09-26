@@ -14,4 +14,5 @@ public class UserBO implements Serializable {
 	@TableId(type = IdType.INPUT)
 	private String id;
 	private String fatherId;
+	private String sex;
 }
