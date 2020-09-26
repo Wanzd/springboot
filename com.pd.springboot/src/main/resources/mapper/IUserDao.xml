@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pd.springboot.dao.IUserDao">
+	<select id="queryDetailInfo" resultType="UserVO">
+select t.id,
+	t.name,
+	t.sex,
+	ft.id as "father.id",
+	ft.name as "father.name",
+	ft.sex as "father.sex",
+	mt.id as "mother.id",
+	mt.name as "mother.name",
+	mt.sex as "mother.sex"
+from user_t t
+left join user_t ft
+	on t.father_id=ft.id
+left join user_t mt
+	on t.mother_id=mt.id
+where t.id=#{fo.id}
+	</select>
+</mapper>  

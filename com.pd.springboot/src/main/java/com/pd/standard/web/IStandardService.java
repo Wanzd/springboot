@@ -50,13 +50,15 @@ public interface IStandardService<FO, VO> extends IQueryInfoOperation<FO, VO>, I
 	@Override
 	default List<VO> queryList(FO fo) throws BusinessException {
 		Object field = ReflectUtil.firstExistField(this, "dao,service,business");
+		if (field instanceof IQueryListOperation) {
+			IQueryListOperation op = (IQueryListOperation) field;
+			return op.queryList(fo);
+		}
 		if (field instanceof BaseMapper) {
 			BaseMapper op = (BaseMapper) field;
 			return op.selectList(null);
 		}
-		IQueryListOperation op = (IQueryListOperation) field;
-		return op.queryList(fo);
-		// return (List<VO>) OperationUtil.operate(OperationEnum.QUERY_LIST, this, fo);
+		return null;
 	}
 
 	default int insertList(List<VO> list) throws BusinessException {

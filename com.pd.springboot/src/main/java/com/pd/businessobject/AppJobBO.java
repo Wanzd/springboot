@@ -30,6 +30,7 @@ public class AppJobBO implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date creationDate;
 	private String url;
-	@TableLogic
 	private Integer deleted;
+	@TableLogic
+	private Integer deleteFlag;
 }

@@ -48,12 +48,15 @@ public interface IStandardRest<FO, VO> {
 	@ResponseBody
 	default List queryList(@RequestBody(required = false) FO fo) throws BusinessException {
 		Object field = ReflectUtil.firstExistField(this, "service");
+		if (field instanceof IQueryListOperation) {
+			IQueryListOperation op = (IQueryListOperation) field;
+			return op.queryList(fo);
+		}
 		if (field instanceof ServiceImpl) {
 			ServiceImpl op = (ServiceImpl) field;
 			return op.list(null);
 		}
-		IQueryListOperation service = ReflectUtil.firstExistField(this, IQueryListOperation.class, "service,dao");
-		return service.queryList(fo);
+		return null;
 	}
 
 	@RequestMapping(value = "/queryPagedList/{pageSize}/{curPage}", method = { RequestMethod.POST })
