@@ -1,6 +1,7 @@
 package com.pd.standard.web;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.websocket.server.PathParam;
 
@@ -13,13 +14,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pd.base.exception.BusinessException;
 import com.pd.businessobject.PageVO;
-import com.pd.common.enums.OperationEnum;
-import com.pd.common.util.OperationUtil;
 import com.pd.common.util.ReflectUtil;
+import com.pd.common.util.Reflects;
 import com.pd.standard.itf.IDeleteInfoOperation;
+import com.pd.standard.itf.IDeleteListOperation;
 import com.pd.standard.itf.IQueryInfoOperation;
 import com.pd.standard.itf.IQueryListOperation;
+import com.pd.standard.itf.IQueryPagedListOperation;
 import com.pd.standard.itf.IUpdateInfoOperation;
+import com.pd.standard.itf.IUpdateListOperation;
 
 public interface IStandardRest<FO, VO> {
 
@@ -63,7 +66,17 @@ public interface IStandardRest<FO, VO> {
 	@ResponseBody
 	default Object queryPagedList(@RequestParam(required = false) FO fo, @PathParam(value = "") PageVO page)
 			throws BusinessException {
-		return OperationUtil.operate(OperationEnum.QUERY_PAGED_LIST, this, fo, page);
+		Object field = ReflectUtil.firstExistField(this, "service");
+		if (field instanceof IQueryPagedListOperation) {
+			IQueryPagedListOperation op = (IQueryPagedListOperation) field;
+			return op.queryPagedList(fo, page);
+		}
+		if (field instanceof ServiceImpl) {
+			ServiceImpl op = (ServiceImpl) field;
+			return op.list(null);
+		}
+		return null;
+		// return OperationUtil.operate(OperationEnum.QUERY_PAGED_LIST, this, fo, page);
 	}
 
 	@RequestMapping("/updateInfo")
@@ -71,6 +84,37 @@ public interface IStandardRest<FO, VO> {
 		IUpdateInfoOperation service = ReflectUtil.firstExistField(this, IUpdateInfoOperation.class,
 				"business,service,dao");
 		return service.updateInfo(fo);
+	}
+
+	@RequestMapping("/updateList")
+	default int updateList(@RequestBody(required = false) List<VO> list) throws BusinessException {
+		Object field = ReflectUtil.firstExistField(this, "service");
+		if (field instanceof IUpdateListOperation) {
+			IUpdateListOperation op = (IUpdateListOperation) field;
+			return op.updateList(list);
+		}
+		if (field instanceof ServiceImpl) {
+			ServiceImpl op = (ServiceImpl) field;
+			op.saveOrUpdateBatch(list);
+			return list.size();
+		}
+		return -1;
+	}
+
+	@RequestMapping("/deleteList")
+	default int deleteList(@RequestBody(required = false) List<VO> list) throws BusinessException {
+		Object field = ReflectUtil.firstExistField(this, "service");
+		if (field instanceof IDeleteListOperation) {
+			IDeleteListOperation op = (IDeleteListOperation) field;
+			return op.deleteList(list);
+		}
+		if (field instanceof ServiceImpl) {
+			ServiceImpl op = (ServiceImpl) field;
+			List<Object> idList = list.stream().map(vo -> Reflects.<Long>identity(vo)).collect(Collectors.toList());
+			op.removeByIds(idList);
+			return list.size();
+		}
+		return -1;
 	}
 
 	@RequestMapping("/deleteInfo")

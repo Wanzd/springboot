@@ -7,6 +7,7 @@ import java.util.List;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pd.base.exception.BusinessException;
+import com.pd.businessobject.PageVO;
 import com.pd.common.enums.OperationEnum;
 import com.pd.common.util.OperationUtil;
 import com.pd.common.util.ReflectUtil;
@@ -16,10 +17,11 @@ import com.pd.standard.itf.IDeleteOperation;
 import com.pd.standard.itf.IInsertListOperation;
 import com.pd.standard.itf.IQueryInfoOperation;
 import com.pd.standard.itf.IQueryListOperation;
+import com.pd.standard.itf.IQueryPagedListOperation;
 import com.pd.standard.itf.IUpdateInfoOperation;
 
 public interface IStandardService<FO, VO> extends IQueryInfoOperation<FO, VO>, IQueryListOperation<FO, VO>,
-		IUpdateInfoOperation<VO>, IDeleteInfoOperation<VO> {
+		IQueryPagedListOperation<FO, VO>, IUpdateInfoOperation<VO>, IDeleteInfoOperation<VO> {
 
 	@Override
 	default VO queryInfo(FO fo) throws BusinessException {
@@ -59,6 +61,34 @@ public interface IStandardService<FO, VO> extends IQueryInfoOperation<FO, VO>, I
 			return op.selectList(null);
 		}
 		return null;
+	}
+
+	@Override
+	default List<VO> queryPagedList(FO fo, PageVO page) throws BusinessException {
+		Object field = ReflectUtil.firstExistField(this, "dao,service,business");
+		if (field instanceof IQueryPagedListOperation) {
+			IQueryPagedListOperation op = (IQueryPagedListOperation) field;
+			return op.queryPagedList(fo, page);
+		}
+		if (field instanceof BaseMapper) {
+			BaseMapper op = (BaseMapper) field;
+			return op.selectList(null);
+		}
+		return null;
+	}
+
+	@Override
+	default int queryCount(FO fo) throws BusinessException {
+		Object field = ReflectUtil.firstExistField(this, "dao,service,business");
+		if (field instanceof IQueryPagedListOperation) {
+			IQueryPagedListOperation op = (IQueryPagedListOperation) field;
+			return op.queryCount(fo);
+		}
+		if (field instanceof BaseMapper) {
+			BaseMapper op = (BaseMapper) field;
+			return op.selectCount(null);
+		}
+		return 0;
 	}
 
 	default int insertList(List<VO> list) throws BusinessException {

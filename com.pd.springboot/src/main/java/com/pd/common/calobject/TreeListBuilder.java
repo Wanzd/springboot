@@ -1,9 +1,9 @@
 package com.pd.common.calobject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import com.pd.businessobject.MapVO;
 import com.pd.standard.itf.IBuilder;
@@ -23,7 +23,8 @@ public class TreeListBuilder implements IBuilder<MapVO, List<MapVO>> {
 		System.out.println(list);
 
 		List<MapVO> rsList = new ArrayList<MapVO>();
-		Map<String, MapVO> idMap = list.stream().collect(Collectors.toMap(vo -> vo.str(idStr), vo -> vo));
+		Map<String, MapVO> idMap = new HashMap<>();
+		list.stream().forEach(vo -> idMap.put(vo.str(idStr), vo));
 		System.out.println(list);
 		for (MapVO eachVO : list) {
 			String curPid = eachVO.str(pidStr);

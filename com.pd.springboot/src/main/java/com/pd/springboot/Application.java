@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
 import com.baomidou.mybatisplus.core.injector.ISqlInjector;
+import com.baomidou.mybatisplus.extension.incrementer.OracleKeyGenerator;
 import com.pd.springboot.filter.VirtualFilter;
 
 @SpringBootApplication
@@ -38,5 +39,10 @@ public class Application {
 	@Bean
 	public ISqlInjector sqlInjector() {
 		return new DefaultSqlInjector();
+	}
+
+	@Bean
+	public OracleKeyGenerator oracleKeyGenerator() {
+		return new OracleKeyGenerator();
 	}
 }

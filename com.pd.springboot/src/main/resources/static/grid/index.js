@@ -6,6 +6,7 @@ require.config({
 			paths : {
 				jquery : "../jquery.min",
 				easyui : "../jquery.easyui.min",
+				easyuiCn : "../easyui-lang-zh_CN",
 				ai : "../ai",
 				common : "../common"
 			},

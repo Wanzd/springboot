@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.pd.standard.itf.IIdentity;
+
 public class Reflects {
 	public static List<Method> methods(Object in) {
 		if (in == null) {
@@ -62,6 +64,13 @@ public class Reflects {
 			if (field != null) {
 				return field;
 			}
+		}
+		return null;
+	}
+
+	public static <T> T identity(Object in) {
+		if (in instanceof IIdentity) {
+			return (T) ((IIdentity) in).getId();
 		}
 		return null;
 	}

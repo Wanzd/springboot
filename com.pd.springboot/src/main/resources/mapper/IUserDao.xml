@@ -18,4 +18,22 @@ left join user_t mt
 	on t.mother_id=mt.id
 where t.id=#{fo.id}
 	</select>
+	
+	<select id="queryPagedList" resultType="UserVO">
+select *
+from (
+	select rs.*,rownum rn 
+	from (
+		select t.id,
+			t.name,
+			t.sex
+		from user_t t
+		where t.id=#{fo.id}
+		order by id
+	) rs  
+)
+where #{page.endIdx}>=rn
+	and rn>=#{page.startIdx} 
+	</select>
+	
 </mapper>  
