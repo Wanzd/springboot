@@ -6,7 +6,7 @@
 	<select id="queryList" resultType="SysMenuBO">
 select id as "id",
 	pid as "pid",
-	name as "cn",
+	name as "name",
 	url as "url",
 	detail as "detail"
 from sys_Menu_t

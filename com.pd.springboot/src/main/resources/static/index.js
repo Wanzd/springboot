@@ -24,7 +24,7 @@ require(['jquery', 'easyui', 'common', 'tree', 'db'], function(jquery, easyui,
 				url : "menuRest/root",
 				onClick : main.tabMenu,
 				formatter : function(node) {
-					var s = node.cn;
+					var s = node.name;
 					if (node.children) {
 						s += ' <span style=\'color:blue\'>('
 								+ node.children.length + ')</span>';
@@ -84,15 +84,15 @@ require(['jquery', 'easyui', 'common', 'tree', 'db'], function(jquery, easyui,
 			if (treeItem.url == null || treeItem.url == "") {
 				return;
 			}
-			if (!$("#tt").tabs("exists", treeItem.cn)) {
+			if (!$("#tt").tabs("exists", treeItem.name)) {
 				$('#tt').tabs('add', {
-							title : treeItem.cn,
+							title : treeItem.name,
 							href : treeItem.url,
 							selected : true,
 							closable : true
 						});
 			}
-			$("#tt").tabs("select", treeItem.cn);
+			$("#tt").tabs("select", treeItem.name);
 			setTimeout('$build("db.addEvent")', 500);
 		},
 		openModule : function() {

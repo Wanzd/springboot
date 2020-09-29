@@ -9,15 +9,17 @@ select t.id,
 	t.sort_id "sortId",
 	ft.id as "father.id",
 	ft.name as "father.name",
-	ft.sex as "father.sex",
 	mt.id as "mother.id",
 	mt.name as "mother.name",
-	mt.sex as "mother.sex"
+	mt.id as "mate.id",
+	mt.name as "mate.name"
 from user_t t
 left join user_t ft
 	on t.father_id=ft.id
 left join user_t mt
 	on t.mother_id=mt.id
+left join user_t mt2
+	on t.mate_id=mt2.id
 where t.id=#{fo.id}
 order by t.sort_id,t.birthday
 	</select>
@@ -35,21 +37,53 @@ from (
 			t.birthday,
 			t.father_id "fatherId",
 			t.mother_id "motherId",
+			t.mate_id "mateId",
 			ft.id as "father.id",
 			ft.name as "father.name",
 			mt.id as "mother.id",
-			mt.name as "mother.name"
+			mt.name as "mother.name",
+			mt2.id as "mate.id",
+			mt2.name as "mate.name"
 		from user_t t
 		left join user_t ft
 			on t.father_id=ft.id
 		left join user_t mt
 			on t.mother_id=mt.id
+		left join user_t mt2
+			on t.mate_id=mt2.id
 		where 1=1
 		order by t.name,t.birthday,t.sort_id
 	) rs  
 )
 where #{page.endIdx}>=rn
 	and rn>=#{page.startIdx} 
+	</select>
+	
+	<select id="queryList" resultType="UserVO">
+select t.id,
+	t.name,
+	t.sex,
+	t.tel,
+	t.sort_id "sortId",
+	t.birthday,
+	t.father_id "fatherId",
+	t.mother_id "motherId",
+	t.mate_id "mateId",
+	ft.id as "father.id",
+	ft.name as "father.name",
+	mt.id as "mother.id",
+	mt.name as "mother.name",
+	mt2.id as "mate.id",
+	mt2.name as "mate.name"
+from user_t t
+left join user_t ft
+	on t.father_id=ft.id
+left join user_t mt
+	on t.mother_id=mt.id
+left join user_t mt2
+	on t.mate_id=mt2.id
+where 1=1
+order by t.name,t.birthday,t.sort_id
 	</select>
 	
 	<select id="queryCombo" resultType="ComboVO">

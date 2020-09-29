@@ -23,6 +23,8 @@ public class UserBO implements Serializable, IIdentity<Long> {
 	private String fatherId;
 	@TableField(updateStrategy = FieldStrategy.IGNORED)
 	private String motherId;
+	@TableField(updateStrategy = FieldStrategy.IGNORED)
+	private String mateId;
 	private String sex;
 	private String tel;
 	private Integer sortId;

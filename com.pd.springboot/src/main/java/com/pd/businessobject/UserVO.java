@@ -23,17 +23,19 @@ public class UserVO extends UserBO {
 	@TableField(exist = false)
 	private UserVO mother;
 	@TableField(exist = false)
-	private UserExtendBO extend;
-	
-	
+	private UserVO mate;
 	@TableField(exist = false)
-	private Integer  age;
+	private UserExtendBO extend;
+
+	@TableField(exist = false)
+	private Integer age;
 	@TableField(exist = false)
 	private String sexLabel;
 
 	public Integer getAge() {
 		return IntegerX.getAge(getBirthday());
 	}
+
 	public String getSexLabel() {
 		String tmpSex = getSex();
 		if (StringUtils.isEmpty(tmpSex)) {

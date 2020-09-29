@@ -4,24 +4,18 @@ var columns = [{
 			field : 'ck',
 			checkbox : true
 		}, {
+			field : 'pid',
+			title : 'pid',
+			width : 200,
+			editor : 'text'
+		}, {
 			field : 'id',
 			title : 'Id',
-			width : 100
+			width : 200
 		}, {
 			field : 'name',
-			title : '姓名',
-			width : 100,
-			formatter : function(value, row, index) {
-				var colorMap = {
-					1 : "blue",
-					0 : "red"
-				};
-				var color = colorMap[row.sex];
-				if (color == null) {
-					color = "black"
-				}
-				return '<font color="' + color + '">' + value + '</font>';
-			},
+			title : '名称',
+			width : 200,
 			editor : {
 				type : 'text',
 				options : {
@@ -29,81 +23,18 @@ var columns = [{
 				}
 			}
 		}, {
-			field : 'age',
-			title : '年龄',
-			width : 100
-		}, {
-			field : 'tel',
-			title : '电话号码',
-			width : 100,
-			editor : 'text'
-		}, {
-			field : 'sex',
-			title : '性别',
-			width : 100,
-			formatter : function(value, row, index) {
-				return row.sexLabel;
-			},
-			editor : {
-				type : 'combobox',
-				options : {
-					valueField : 'id',
-					textField : 'text',
-					url : '../comboRest/LOOKUP:sex',
-					required : true
-				}
-			}
-		}, {
 			field : 'sortId',
-			title : '家庭排行',
+			title : '排序号',
 			width : 60,
 			editor : 'numberbox'
 		}, {
-			field : 'fatherId',
-			title : '父亲',
-			width : 100,
-			formatter : function(value, row, index) {
-				return row.father ? row.father.name : null;
-			},
+			field : 'url',
+			title : '链接',
+			width : 500,
 			editor : {
-				type : 'combobox',
+				type : 'text',
 				options : {
-					valueField : 'id',
-					textField : 'text',
-					url : '../comboRest/USER:',
-					required : false
-				}
-			}
-		}, {
-			field : 'motherId',
-			title : '母亲',
-			width : 100,
-			formatter : function(value, row, index) {
-				return row.mother ? row.mother.name : null;
-			},
-			editor : {
-				type : 'combobox',
-				options : {
-					valueField : 'id',
-					textField : 'text',
-					url : '../comboRest/USER:',
-					required : false
-				}
-			}
-		}, {
-			field : 'mateId',
-			title : '配偶',
-			width : 100,
-			formatter : function(value, row, index) {
-				return row.mate ? row.mate.name : null;
-			},
-			editor : {
-				type : 'combobox',
-				options : {
-					valueField : 'id',
-					textField : 'text',
-					url : '../comboRest/USER:',
-					required : false
+					required : true
 				}
 			}
 		}];
@@ -134,7 +65,7 @@ var $pageCfg = {
 			width : '100%',
 			height : '100%',
 			singleSelect : false,
-			url : "../userRest/queryPagedList/100/1", // 指向后台的Action来获取当前菜单的信息的Json格式的数据
+			url : "../menuRest/queryPagedList/100/1", // 指向后台的Action来获取当前菜单的信息的Json格式的数据
 			iconCls : 'icon-edit',
 			nowrap : true,
 			autoRowHeight : true,
@@ -180,7 +111,7 @@ var $pageCfg = {
 				iconCls : 'icon-save',
 				handler : function() {
 					$('#dg').datagrid('endEdit', editIndex);
-					var url = "../userRest/updateList";
+					var url = "../menuRest/updateList";
 					var data = $("#dg").datagrid("getChanges");
 					var rs = common.ajax(url, data);
 					if (rs) {
@@ -200,7 +131,7 @@ var $pageCfg = {
 							'Are you sure you want to delete record?',
 							function(r) {
 								if (r) {
-									var url = "../userRest/deleteList";
+									var url = "../menuRest/deleteList";
 									var data = $("#dg")
 											.datagrid("getSelections");
 									var rs = common.ajax(url, data);
