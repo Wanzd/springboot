@@ -5,6 +5,8 @@
 select t.id,
 	t.name,
 	t.sex,
+	t.tel,
+	t.sort_id "sortId",
 	ft.id as "father.id",
 	ft.name as "father.name",
 	ft.sex as "father.sex",
@@ -17,6 +19,7 @@ left join user_t ft
 left join user_t mt
 	on t.mother_id=mt.id
 where t.id=#{fo.id}
+order by t.sort_id,t.birthday
 	</select>
 	
 	<select id="queryPagedList" resultType="UserVO">
@@ -26,14 +29,37 @@ from (
 	from (
 		select t.id,
 			t.name,
-			t.sex
+			t.sex,
+			t.tel,
+			t.sort_id "sortId",
+			t.birthday,
+			t.father_id "fatherId",
+			t.mother_id "motherId",
+			ft.id as "father.id",
+			ft.name as "father.name",
+			mt.id as "mother.id",
+			mt.name as "mother.name"
 		from user_t t
-		where t.id=#{fo.id}
-		order by id
+		left join user_t ft
+			on t.father_id=ft.id
+		left join user_t mt
+			on t.mother_id=mt.id
+		where 1=1
+		order by t.name,t.birthday,t.sort_id
 	) rs  
 )
 where #{page.endIdx}>=rn
 	and rn>=#{page.startIdx} 
+	</select>
+	
+	<select id="queryCombo" resultType="ComboVO">
+select t.id as "id",
+	t.name as "text"
+from user_t t
+where 1=1
+		<if test='fo.name !=null and fo.name !=""'> and t.name like #{fo.name,jdbcType=VARCHAR}+'%'</if>
+		<if test='fo.sex !=null and fo.sex !=""'> and t.sex =#{fo.sex}</if>
+order by t.name
 	</select>
 	
 </mapper>  

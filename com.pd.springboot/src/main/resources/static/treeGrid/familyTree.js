@@ -142,7 +142,7 @@ var treeGridImpl = {
 var treeGridCols = [[{
 			title : '姓名',
 			field : 'text',
-			width : 120,
+			width : 200,
 			rowspan : 1
 		}, {
 			title : '性别',
@@ -158,6 +158,12 @@ var treeGridCols = [[{
 		}, {
 			title : '生日',
 			field : 'birthday',
+			width : 180,
+			align : 'left',
+			rowspan : 1
+		}, {
+			title : '电话号码',
+			field : 'tel',
 			width : 180,
 			align : 'left',
 			rowspan : 1

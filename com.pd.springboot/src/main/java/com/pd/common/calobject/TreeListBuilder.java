@@ -26,17 +26,22 @@ public class TreeListBuilder implements IBuilder<MapVO, List<MapVO>> {
 		Map<String, MapVO> idMap = new HashMap<>();
 		list.stream().forEach(vo -> idMap.put(vo.str(idStr), vo));
 		System.out.println(list);
-		for (MapVO eachVO : list) {
+		for (String eachKey : idMap.keySet()) {
+			MapVO eachVO = idMap.get(eachKey);
 			String curPid = eachVO.str(pidStr);
-			if (curPid.length() == 0) {
-				rsList.add(eachVO);
-			} else {
+			if (curPid.length() > 0) {
 				MapVO mapVO = idMap.get(curPid);
 				if (mapVO == null) {
 					continue;
 				}
 				List<MapVO> childrenList = mapVO.list("children");
 				childrenList.add(eachVO);
+			}
+		}
+		for (MapVO eachVO : list) {
+			String curPid = eachVO.str(pidStr);
+			if (curPid.length() == 0) {
+				rsList.add(eachVO);
 			}
 		}
 		return rsList;

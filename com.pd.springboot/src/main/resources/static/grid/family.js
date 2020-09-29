@@ -33,9 +33,13 @@ var columns = [{
 			title : '年龄',
 			width : 100
 		}, {
+			field : 'tel',
+			title : '电话号码',
+			width : 100,
+			editor : 'text'
+		}, {
 			field : 'sex',
 			title : '性别',
-			label : 'sexLabel',
 			width : 100,
 			formatter : function(value, row, index) {
 				return row.sexLabel;
@@ -45,8 +49,45 @@ var columns = [{
 				options : {
 					valueField : 'id',
 					textField : 'text',
-					url : '../LOOKUP:sex',
+					url : '../comboRest/LOOKUP:sex',
 					required : true
+				}
+			}
+		}, {
+			field : 'sortId',
+			title : '家庭排行',
+			width : 60,
+			editor : 'numberbox'
+		}, {
+			field : 'fatherId',
+			title : '父亲',
+			width : 100,
+			formatter : function(value, row, index) {
+				return row.father ? row.father.name : null;
+			},
+			editor : {
+				type : 'combobox',
+				options : {
+					valueField : 'id',
+					textField : 'text',
+					url : '../comboRest/USER:',
+					required : false
+				}
+			}
+		}, {
+			field : 'motherId',
+			title : '母亲',
+			width : 100,
+			formatter : function(value, row, index) {
+				return row.mother ? row.mother.name : null;
+			},
+			editor : {
+				type : 'combobox',
+				options : {
+					valueField : 'id',
+					textField : 'text',
+					url : '../comboRest/USER:',
+					required : false
 				}
 			}
 		}];
@@ -77,7 +118,7 @@ var $pageCfg = {
 			width : '100%',
 			height : '100%',
 			singleSelect : false,
-			url : "../userRest/queryPagedList/5/1", // 指向后台的Action来获取当前菜单的信息的Json格式的数据
+			url : "../userRest/queryPagedList/100/1", // 指向后台的Action来获取当前菜单的信息的Json格式的数据
 			iconCls : 'icon-edit',
 			nowrap : true,
 			autoRowHeight : true,
