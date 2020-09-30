@@ -7,14 +7,30 @@ var treeGridImpl = {
 				'女' : "red",
 				0 : "red"
 			};
+			var mateColorMap = {
+				'blue' : "red",
+				'red' : "blue",
+				'black' : "black"
+			};
 			var color = colorMap[vo.sex];
 			if (color == null) {
 				color = "black";
 			}
+			var mateColor = mateColorMap[color];
+			var valueStr = value;
 			if (vo.mate != null) {
-				value = value + "(" + vo.mate.name + ")";
+				var mateValueStr = vo.mate.name;
+				return '<font color="' + color + '">' + vo.sortId + ':'
+						+ valueStr + '</font>' + '(' + '<font color="'
+						+ mateColor + '">' + mateValueStr + '</font>' + ')';
 			}
-			return '<font color="' + color + '">' + value + '</font>';
+			return '<font color="' + color + '">' + vo.sortId + ':' + valueStr
+					+ '</font>';
+		}
+	},
+	fulChildrenCnt : {
+		formater : function(value, vo, index) {
+			return value;
 		}
 	}
 }
@@ -24,6 +40,31 @@ var treeGridCols = [[{
 			width : 200,
 			rowspan : 1,
 			formatter : treeGridImpl.text.formater
+		}, {
+			title : '子女',
+			field : 'childrenCnt',
+			width : 40,
+			align : 'right',
+			rowspan : 1
+		}, {
+			title : '子孙(分布)',
+			field : 'fulChildrenCnt',
+			width : 100,
+			align : 'right',
+			rowspan : 1,
+			formatter : treeGridImpl.fulChildrenCnt.formater
+		}, {
+			title : '叶节点',
+			field : 'leafChildrenCnt',
+			width : 40,
+			align : 'right',
+			rowspan : 1
+		}, {
+			title : '有效叶节点',
+			field : 'validLeafChildrenCnt',
+			width : 40,
+			align : 'right',
+			rowspan : 1
 		}, {
 			title : '年龄',
 			field : 'age',

@@ -11,7 +11,8 @@ var columns = [{
 		}, {
 			field : 'id',
 			title : 'Id',
-			width : 200
+			width : 200,
+			editor : 'text'
 		}, {
 			field : 'name',
 			title : '名称',
