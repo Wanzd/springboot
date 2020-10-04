@@ -21,6 +21,9 @@ require(['jquery', 'easyui', 'common', 'echarts', 'echartsgl', 'ai$echart'],
 			var chartId = common.parseUrl(location.href).id;
 			var chartUrl = '../CHART:' + chartId;
 			var chartJson = common.ajax(chartUrl);
+			echarts.util.each(chartJson.children, function(datum, index) {
+						datum.collapsed = true;
+					});
 			option = ai$echart.x$option(chartJson);
 			myChart.setOption(option);
 		});

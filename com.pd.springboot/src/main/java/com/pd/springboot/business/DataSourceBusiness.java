@@ -32,6 +32,9 @@ public class DataSourceBusiness {
             return null;
         }
         IBuilder<SysDataSourceBO, Object> opBuilder = builderMap.get(vo.getType());
+        if (opBuilder == null) {
+            return vo;
+        }
         return opBuilder.build(vo);
     }
 
@@ -49,14 +52,12 @@ public class DataSourceBusiness {
     }
 
     public class DataSourceViewBuilder implements IBuilder<SysDataSourceBO, Object> {
-
         @Override
         public Object build(SysDataSourceBO in) throws BusinessException {
             MapVO fo = new MapVO();
             fo.put("viewName", in.getDetail());
             return viewDao.queryList(fo);
         }
-
     }
 
     public class DataSourceObjBuilder implements IBuilder<SysDataSourceBO, Object> {
@@ -77,6 +78,7 @@ public class DataSourceBusiness {
         public Object build(SysDataSourceBO in) throws BusinessException {
             MapVO fo = new MapVO();
             fo.put("viewName", in.getDetail());
+            // return viewDao.queryList(fo);
             return MapVOX.sortTreeList(viewDao.queryList(fo));
         }
 

@@ -157,6 +157,51 @@ define(['ai$echart'], function() {
 					};
 					return option;
 				},
+				x$option$verticalTree : function(data) {
+					var list = data.list;
+					var datas = {
+						name : "root",
+						children : [data.list[1]]
+					};
+					var option = {
+						title : {
+							text : datas.name
+						},
+						tooltip : {
+							trigger : 'axis',
+							confine : true
+						},
+						series : [{
+									type : 'tree',
+									data : [datas],
+									top : '1%',
+									left : '15%',
+									bottom : '1%',
+									right : '7%',
+									orient : 'RL',
+									label : {
+										position : 'left',
+										verticalAlign : 'middle',
+										align : 'right'
+									},
+
+									leaves : {
+										label : {
+											position : 'left',
+											verticalAlign : 'middle',
+											align : 'right'
+										}
+									},
+
+									expandAndCollapse : true,
+
+									animationDuration : 550,
+									animationDurationUpdate : 750
+
+								}]
+					};
+					return option;
+				},
 				x$option$bMap : function(data) {
 					var cityPointMap = {
 						'海门' : [121.15, 31.89],
@@ -919,7 +964,8 @@ define(['ai$echart'], function() {
 					"scatter3D" : impl.x$option$scatter3D,
 					"treeMap" : impl.x$option$treeMap,
 					"bMap" : impl.x$option$bMap2,
-					"timeLine" : impl.x$option$timeLine
+					"timeLine" : impl.x$option$timeLine,
+					"verticalTree" : impl.x$option$verticalTree
 				}
 				f = fMap[data.chartType]
 				return f != null ? f(data) : null;

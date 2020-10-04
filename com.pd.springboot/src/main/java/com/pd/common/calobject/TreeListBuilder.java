@@ -67,8 +67,18 @@ public class TreeListBuilder implements IBuilder<List<MapVO>, List<MapVO>> {
             Collections.sort(childrenList, new Comparator<MapVO>() {
                 @Override
                 public int compare(MapVO o1, MapVO o2) {
-                    int rs = (int) o1.num("sortId") > (int) o2.num("sortId") ? 1 : -1;
-                    return rs;
+                    double sick1 = o1.num("sick");
+                    double sick2 = o2.num("sick");
+                    if (sick1 != sick2) {
+                        return sick1 < sick2 ? 1 : -1;
+                    }
+
+                    double sortId1 = o1.num("sortId");
+                    double sortId2 = o2.num("sortId");
+                    if (sortId1 == sortId2) {
+                        return 0;
+                    }
+                    return sortId1 > sortId2 ? 1 : -1;
                 }
             });
             for (MapVO eachChild : childrenList) {

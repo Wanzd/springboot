@@ -7,8 +7,10 @@ import com.pd.businessobject.SysMenuBO;
 import com.pd.businessobject.SysMenuFO;
 import com.pd.businessobject.SysMenuVO;
 import com.pd.standard.itf.IQueryListOperation;
+import com.pd.standard.itf.IQueryPagedListOperation;
 
 @Mapper
-public interface ISysMenuDao extends BaseMapper<SysMenuVO>, IQueryListOperation<SysMenuFO, SysMenuBO> {
+public interface ISysMenuDao extends BaseMapper<SysMenuVO>, IQueryListOperation<SysMenuFO, SysMenuBO>,
+        IQueryPagedListOperation<SysMenuFO, SysMenuBO> {
 
 }

@@ -8,6 +8,7 @@ select id as "id",
 	pid as "pid",
 	name as "name",
 	url as "url",
+  	sort_id as "sortId",
 	detail as "detail"
 from sys_Menu_t
 where 1=1
@@ -16,5 +17,18 @@ where 1=1
 			<otherwise>and pid is null </otherwise>
 		</choose> 	
 order by sort_id,id
+	</select>
+	<select id="queryPagedList" resultType="SysMenuBO">
+select SYS_CONNECT_BY_PATH(replace(lpad(sort_id,3),' ','0'),'\')  as "fullPath",
+	id as "id",
+	pid as "pid",
+	name as "name",
+  	url as "url",
+  	sort_id as "sortId",
+  	detail as "detail"
+from sys_Menu_t
+start with pid is null
+connect by prior id=pid
+order by "fullPath"
 	</select>
 </mapper>

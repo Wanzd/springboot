@@ -72,7 +72,7 @@ public interface IStandardRest<FO, VO> {
         }
         if (field instanceof ServiceImpl) {
             ServiceImpl op = (ServiceImpl) field;
-            List<Object> idList = list.stream().map(vo -> Reflects.<String>identity(vo)).collect(Collectors.toList());
+            List<Object> idList = list.stream().map(vo -> Reflects.identity(vo)).collect(Collectors.toList());
             op.removeByIds(idList);
             return list.size();
         }
