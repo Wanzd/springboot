@@ -134,7 +134,7 @@ var $pageCfg = {
 			width : '100%',
 			height : '100%',
 			singleSelect : false,
-			url : "../userRest/queryPagedList/100/1", // 指向后台的Action来获取当前菜单的信息的Json格式的数据
+			url : "../userRest/queryPagedList/1000/1", // 指向后台的Action来获取当前菜单的信息的Json格式的数据
 			iconCls : 'icon-edit',
 			nowrap : true,
 			autoRowHeight : true,
@@ -215,14 +215,11 @@ var $pageCfg = {
 
 				}
 			}, '-', {
-				id : 'btnView',
-				text : '查看',
-				iconCls : 'icon-table',
+				id : 'btnExport',
+				text : '导出',
+				iconCls : 'icon-reload',
 				handler : function() {
-					var selectRow = $('#dg').datagrid('getSelected');
-					var detailObj = common.ajax("rest/" + curParams.m
-							+ ".detail?id=" + selectRow.id);
-					console.debug(detailObj);
+					window.location.href = "../userRest/export";
 				}
 			}, '-', {
 				id : 'btnReload',

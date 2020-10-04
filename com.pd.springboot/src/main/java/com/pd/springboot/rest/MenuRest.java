@@ -14,13 +14,13 @@ import com.pd.standard.web.IStandardRest;
 @RestController
 @RequestMapping("menuRest")
 public class MenuRest implements IStandardRest<SysMenuFO, SysMenuBO> {
-	@Autowired
-	private MenuService service;
+    @Autowired
+    private MenuService service;
 
-	@RequestMapping("/root")
-	// @Cacheable(value = "redis", key = "menuRoot")
-	public String root() throws BusinessException {
-		return StringX.from(service.queryList(new SysMenuFO()));
-	}
+    @RequestMapping("/root")
+    // @Cacheable(value = "redis", key = "menuRoot")
+    public String root() throws BusinessException {
+        return StringX.from(queryList(new SysMenuFO()));
+    }
 
 }

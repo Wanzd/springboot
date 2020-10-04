@@ -12,7 +12,7 @@ select id as "id",
 from sys_Menu_t
 where 1=1
 		<choose>
-			<when test='fo.pid!=null and fo.pid!=""'> and pid =#{fo.pid,jdbcType=VARCHAR}</when>
+			<when test='fo!=null and fo.pid!=null and fo.pid!=""'> and pid =#{fo.pid,jdbcType=VARCHAR}</when>
 			<otherwise>and pid is null </otherwise>
 		</choose> 	
 order by sort_id,id

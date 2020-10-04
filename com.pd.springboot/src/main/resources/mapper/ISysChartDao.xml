@@ -35,6 +35,13 @@ select id "id",
 from sys_chart_t
 	</select>
 	
+	<select id="queryPagedList" resultType="SysChartBO">
+select id "id",
+	json_data "jsonData"
+from sys_chart_t
+order by id
+	</select>
+	
 	<update id="updateList">
 begin
 	

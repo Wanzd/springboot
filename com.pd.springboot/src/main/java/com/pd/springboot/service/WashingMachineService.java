@@ -14,7 +14,7 @@ import com.pd.standard.itf.IExportOperation;
 import com.pd.standard.web.IStandardService;
 
 @Named
-public class MenuService extends ServiceImpl<ISysMenuDao, SysMenuVO>
+public class WashingMachineService extends ServiceImpl<ISysMenuDao, SysMenuVO>
         implements IStandardService<SysMenuFO, SysMenuBO>, IExportOperation<SysMenuFO> {
     @Autowired
     private ISysMenuDao dao;

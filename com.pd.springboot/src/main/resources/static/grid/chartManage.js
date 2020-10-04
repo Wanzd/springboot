@@ -4,18 +4,8 @@ var columns = [{
 			field : 'ck',
 			checkbox : true
 		}, {
-			field : 'pid',
-			title : 'pid',
-			width : 200,
-			editor : 'text'
-		}, {
 			field : 'id',
 			title : 'Id',
-			width : 200,
-			editor : 'text'
-		}, {
-			field : 'name',
-			title : '名称',
 			width : 200,
 			editor : {
 				type : 'text',
@@ -24,18 +14,15 @@ var columns = [{
 				}
 			}
 		}, {
-			field : 'sortId',
-			title : '排序号',
-			width : 60,
-			editor : 'numberbox'
-		}, {
-			field : 'url',
-			title : '链接',
-			width : 500,
+			field : 'jsonData',
+			title : 'JsonData',
+			width : 1000,
 			editor : {
-				type : 'text',
+				type : 'textarea',
 				options : {
-					required : true
+					required : true,
+					multiline : true,
+					rows : '6'
 				}
 			}
 		}];
@@ -66,7 +53,7 @@ var $pageCfg = {
 			width : '100%',
 			height : '100%',
 			singleSelect : false,
-			url : "../menuRest/queryPagedList/100/1", // 指向后台的Action来获取当前菜单的信息的Json格式的数据
+			url : "../chartRest/queryPagedList/1000/1", // 指向后台的Action来获取当前菜单的信息的Json格式的数据
 			iconCls : 'icon-edit',
 			nowrap : true,
 			autoRowHeight : true,
@@ -112,7 +99,7 @@ var $pageCfg = {
 				iconCls : 'icon-save',
 				handler : function() {
 					$('#dg').datagrid('endEdit', editIndex);
-					var url = "../menuRest/updateList";
+					var url = "../chartRest/updateList";
 					var data = $("#dg").datagrid("getChanges");
 					var rs = common.ajax(url, data);
 					if (rs) {
@@ -132,7 +119,7 @@ var $pageCfg = {
 							'Are you sure you want to delete record?',
 							function(r) {
 								if (r) {
-									var url = "../menuRest/deleteList";
+									var url = "../chartRest/deleteList";
 									var data = $("#dg")
 											.datagrid("getSelections");
 									var rs = common.ajax(url, data);
@@ -151,7 +138,7 @@ var $pageCfg = {
 				text : '导出',
 				iconCls : 'icon-reload',
 				handler : function() {
-					window.location.href = "../menuRest/export";
+					window.location.href = "../chartRest/export";
 				}
 			}, '-', {
 				id : 'btnReload',

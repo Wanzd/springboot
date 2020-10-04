@@ -37,9 +37,27 @@ var treeGridImpl = {
 var treeGridCols = [[{
 			title : '姓名',
 			field : 'text',
-			width : 200,
+			width : 300,
 			rowspan : 1,
 			formatter : treeGridImpl.text.formater
+		}, {
+			title : '年龄',
+			field : 'age',
+			width : 60,
+			align : 'right',
+			rowspan : 1
+		}, {
+			title : '生日',
+			field : 'birthday',
+			width : 80,
+			align : 'left',
+			rowspan : 1
+		}, {
+			title : '电话号码',
+			field : 'tel',
+			width : 90,
+			align : 'left',
+			rowspan : 1
 		}, {
 			title : '子女',
 			field : 'childrenCnt',
@@ -64,23 +82,5 @@ var treeGridCols = [[{
 			field : 'validLeafChildrenCnt',
 			width : 40,
 			align : 'right',
-			rowspan : 1
-		}, {
-			title : '年龄',
-			field : 'age',
-			width : 60,
-			align : 'right',
-			rowspan : 1
-		}, {
-			title : '生日',
-			field : 'birthday',
-			width : 180,
-			align : 'left',
-			rowspan : 1
-		}, {
-			title : '电话号码',
-			field : 'tel',
-			width : 180,
-			align : 'left',
 			rowspan : 1
 		}]];

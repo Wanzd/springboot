@@ -9,12 +9,20 @@ where 1=1
 		<if test='name != null'> and name like '%'||#{name,jdbcType=VARCHAR}||'%'</if>
 	</select>
 	
-	<select id="queryInfo" resultType="MapVO">
+	<select id="queryInfo" resultType="SysDataSourceBO">
 select id "id",
 	name "name",
 	type "type",
 	detail "detail"
 from sys_datasource_t
-where id= #{fo.dataSourceId,jdbcType=VARCHAR}
+where id= #{fo.id,jdbcType=VARCHAR}
+	</select>
+	<select id="queryPagedList" resultType="SysDataSourceBO">
+select id "id",
+	name "name",
+	type "type",
+	detail "detail"
+from sys_datasource_t
+order by id
 	</select>
 </mapper>  

@@ -41,6 +41,12 @@ public class MapVO extends HashMap<String, Object> {
 			put(eachKey, jsonObject.get(eachKey));
 		}
 	}
+	public MapVO(Object obj) {
+		JSONObject jsonObject = (JSONObject)JSON.toJSON(obj);
+		for (String eachKey : jsonObject.keySet()) {
+			put(eachKey, jsonObject.get(eachKey));
+		}
+	}
 
 	public static List<MapVO> list$str(String jsonStr) {
 		List<MapVO> rsList = new ArrayList<MapVO>();
