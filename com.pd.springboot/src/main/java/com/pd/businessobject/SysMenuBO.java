@@ -1,7 +1,5 @@
 package com.pd.businessobject;
 
-import java.io.Serializable;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -12,7 +10,7 @@ import lombok.ToString;
 
 @Data
 @ToString(callSuper = true)
-public class SysMenuBO implements Serializable, IIdentity<String> {
+public class SysMenuBO implements IIdentity<String> {
     private String pid;
     @TableId(type = IdType.INPUT)
     private String id;

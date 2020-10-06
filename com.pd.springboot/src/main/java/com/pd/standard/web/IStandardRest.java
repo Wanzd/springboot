@@ -1,7 +1,6 @@
 package com.pd.standard.web;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.websocket.server.PathParam;
 
@@ -11,17 +10,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pd.base.exception.BusinessException;
 import com.pd.businessobject.PageVO;
 import com.pd.common.util.OperationBridge;
 import com.pd.common.util.ReflectUtil;
-import com.pd.common.util.Reflects;
 import com.pd.standard.itf.IDeleteInfoOperation;
-import com.pd.standard.itf.IDeleteListOperation;
 import com.pd.standard.itf.IExportOperation;
 import com.pd.standard.itf.IUpdateInfoOperation;
-import com.pd.standard.itf.IUpdateListOperation;
 
 public interface IStandardRest<FO, VO> {
     default Object getDefaultField() throws BusinessException {
@@ -60,23 +55,12 @@ public interface IStandardRest<FO, VO> {
 
     @RequestMapping("/updateList")
     default int updateList(@RequestBody(required = false) List<VO> list) throws BusinessException {
-        return OperationBridge.updateList(getDefaultField(),list);
+        return OperationBridge.updateList(getDefaultField(), list);
     }
 
     @RequestMapping("/deleteList")
     default int deleteList(@RequestBody(required = false) List<VO> list) throws BusinessException {
-        Object field = ReflectUtil.firstExistField(this, "service");
-        if (field instanceof IDeleteListOperation) {
-            IDeleteListOperation op = (IDeleteListOperation) field;
-            return op.deleteList(list);
-        }
-        if (field instanceof ServiceImpl) {
-            ServiceImpl op = (ServiceImpl) field;
-            List<Object> idList = list.stream().map(vo -> Reflects.identity(vo)).collect(Collectors.toList());
-            op.removeByIds(idList);
-            return list.size();
-        }
-        return -1;
+        return OperationBridge.deleteList(getDefaultField(), list);
     }
 
     @RequestMapping("/deleteInfo")
