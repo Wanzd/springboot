@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pd.base.exception.BusinessException;
 import com.pd.businessobject.PageVO;
-import com.pd.common.util.OperationBridge;
+import com.pd.common.util.DeleteBridge;
+import com.pd.common.util.ExcelBridge;
+import com.pd.common.util.QueryBridge;
 import com.pd.common.util.ReflectUtil;
-import com.pd.standard.itf.IDeleteInfoOperation;
+import com.pd.common.util.UpdateBridge;
 import com.pd.standard.itf.IExportOperation;
-import com.pd.standard.itf.IUpdateInfoOperation;
 
 public interface IStandardRest<FO, VO> {
     default Object getDefaultField() throws BusinessException {
@@ -25,52 +26,50 @@ public interface IStandardRest<FO, VO> {
 
     @RequestMapping("/queryInfo")
     default Object queryInfo(@RequestBody(required = false) FO fo) throws BusinessException {
-        return OperationBridge.queryInfo(getDefaultField(), fo);
+        return QueryBridge.queryInfo(getDefaultField(), fo);
     }
 
     @RequestMapping("/queryDetailInfo")
     default Object queryDetailInfo(@RequestBody(required = false) FO fo) throws BusinessException {
-        return OperationBridge.queryDetailInfo(getDefaultField(), fo);
+        return QueryBridge.queryDetailInfo(getDefaultField(), fo);
     }
 
     @RequestMapping(value = "/queryList", method = { RequestMethod.POST, RequestMethod.GET })
     @ResponseBody
     default List queryList(@RequestBody(required = false) FO fo) throws BusinessException {
-        return OperationBridge.queryList(getDefaultField(), fo);
+        return QueryBridge.queryList(getDefaultField(), fo);
     }
 
     @RequestMapping(value = "/queryPagedList/{pageSize}/{curPage}", method = { RequestMethod.POST })
     @ResponseBody
     default Object queryPagedList(@RequestParam(required = false) FO fo, @PathParam(value = "") PageVO page)
             throws BusinessException {
-        return OperationBridge.queryPagedList(getDefaultField(), fo, page);
+        return QueryBridge.queryPagedList(getDefaultField(), fo, page);
     }
 
     @RequestMapping("/updateInfo")
-    default int updateInfo(@RequestBody(required = false) VO fo) throws BusinessException {
-        IUpdateInfoOperation service = ReflectUtil.firstExistField(this, IUpdateInfoOperation.class,
-                "business,service,dao");
-        return service.updateInfo(fo);
+    default int updateInfo(@RequestBody(required = false) VO vo) throws BusinessException {
+        return UpdateBridge.updateInfo(getDefaultField(), vo);
     }
 
     @RequestMapping("/updateList")
     default int updateList(@RequestBody(required = false) List<VO> list) throws BusinessException {
-        return OperationBridge.updateList(getDefaultField(), list);
+        return UpdateBridge.updateList(getDefaultField(), list);
     }
 
     @RequestMapping("/deleteList")
     default int deleteList(@RequestBody(required = false) List<VO> list) throws BusinessException {
-        return OperationBridge.deleteList(getDefaultField(), list);
+        return DeleteBridge.deleteList(getDefaultField(), list);
     }
 
     @RequestMapping("/deleteInfo")
-    default int deleteInfo(@RequestBody(required = false) VO fo) throws BusinessException {
-        IDeleteInfoOperation op = ReflectUtil.firstExistField(this, IDeleteInfoOperation.class, "business,service,dao");
-        return op.deleteInfo(fo);
+    default int deleteInfo(@RequestBody(required = false) VO vo) throws BusinessException {
+        return DeleteBridge.deleteInfo(getDefaultField(), vo);
     }
 
     @RequestMapping(value = "/export", method = { RequestMethod.POST, RequestMethod.GET })
     default void export(@RequestBody(required = false) FO fo) throws BusinessException {
+        ExcelBridge.export(getDefaultField(), fo);
         Object field = ReflectUtil.firstExistField(this, "service");
         if (field instanceof IExportOperation) {
             IExportOperation op = (IExportOperation) field;

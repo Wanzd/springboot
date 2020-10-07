@@ -8,58 +8,61 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pd.base.exception.BusinessException;
 import com.pd.businessobject.PageVO;
-import com.pd.common.util.OperationBridge;
+import com.pd.common.util.CreateBridge;
+import com.pd.common.util.DeleteBridge;
+import com.pd.common.util.QueryBridge;
+import com.pd.common.util.UpdateBridge;
 
 public class ServiceAdapter<FO, VO, Dao> extends ServiceImpl<BaseMapper<VO>, VO> {
     @Autowired
     protected Dao dao;
 
     public VO queryInfo(FO fo) throws BusinessException {
-        return OperationBridge.queryInfo(dao, fo);
+        return QueryBridge.queryInfo(dao, fo);
     }
 
     public String queryJson(FO fo) throws BusinessException {
-        return OperationBridge.queryJson(dao, fo);
+        return QueryBridge.queryJson(dao, fo);
     }
 
     public VO queryDetailInfo(FO fo) throws BusinessException {
-        return OperationBridge.queryDetailInfo(dao, fo);
+        return QueryBridge.queryDetailInfo(dao, fo);
     }
 
     public List<VO> queryList(FO fo) throws BusinessException {
-        return OperationBridge.queryList(dao, fo);
+        return QueryBridge.queryList(dao, fo);
     }
 
     public List<VO> queryPagedList(FO fo, PageVO page) throws BusinessException {
-        return OperationBridge.queryPagedList(dao, fo, page);
+        return QueryBridge.queryPagedList(dao, fo, page);
     }
 
     public int queryCount(FO fo) throws BusinessException {
-        return OperationBridge.queryCount(dao, fo);
+        return QueryBridge.queryCount(dao, fo);
     }
 
     public int insertList(List<VO> list) throws BusinessException {
-        return OperationBridge.insertList(dao, list);
+        return CreateBridge.insertList(dao, list);
     }
 
     public int delete(VO vo) throws BusinessException {
-        return OperationBridge.delete(dao, vo);
+        return DeleteBridge.delete(dao, vo);
     }
 
     public int deleteInfo(VO vo) throws BusinessException {
-        return OperationBridge.deleteInfo(dao, vo);
+        return DeleteBridge.deleteInfo(dao, vo);
     }
 
     public int update(VO vo) throws BusinessException {
-        return OperationBridge.update(dao, vo);
+        return UpdateBridge.updateInfo(dao, vo);
     }
 
     public int updateList(List<VO> list) throws BusinessException {
-        return OperationBridge.updateList(dao, list);
+        return UpdateBridge.updateList(dao, list);
     }
 
     public int deleteList(List<VO> list) {
-        return OperationBridge.deleteList(dao, list);
+        return DeleteBridge.deleteList(dao, list);
     }
 
 }

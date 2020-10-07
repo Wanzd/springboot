@@ -1,27 +1,18 @@
 package com.pd.common.util;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pd.base.exception.BusinessException;
 import com.pd.businessobject.PageVO;
 import com.pd.springboot.service.ServiceAdapter;
-import com.pd.standard.itf.IDeleteListOperation;
-import com.pd.standard.itf.IDeleteOperation;
-import com.pd.standard.itf.IIdentity;
-import com.pd.standard.itf.IInsertListOperation;
 import com.pd.standard.itf.IQueryInfoOperation;
 import com.pd.standard.itf.IQueryListOperation;
 import com.pd.standard.itf.IQueryPagedListOperation;
-import com.pd.standard.itf.IUpdateInfoOperation;
-import com.pd.standard.itf.IUpdateListOperation;
 
-public class OperationBridge {
+public class QueryBridge {
 
     public static <FO, VO> VO queryInfo(Object field, FO fo) throws BusinessException {
         if (field instanceof ServiceAdapter) {
@@ -112,98 +103,6 @@ public class OperationBridge {
             return op.selectCount(null);
         }
         return 0;
-    }
-
-    public static <VO> int insertList(Object field, List<VO> list) throws BusinessException {
-        if (field instanceof ServiceAdapter) {
-            ServiceAdapter op = (ServiceAdapter) field;
-            return op.insertList(list);
-        }
-        if (field instanceof IInsertListOperation) {
-            IInsertListOperation op = (IInsertListOperation) field;
-            return op.insertList(list);
-        }
-        return 0;
-    }
-
-    public static <VO> int delete(Object field, VO vo) throws BusinessException {
-        if (field instanceof ServiceAdapter) {
-            ServiceAdapter op = (ServiceAdapter) field;
-            return op.delete(vo);
-        }
-        if (field instanceof IDeleteOperation) {
-            IDeleteOperation op = (IDeleteOperation) field;
-            return op.delete(vo);
-        }
-        return -1;
-    }
-
-    public static <VO> int deleteInfo(Object field, VO vo) throws BusinessException {
-        if (field instanceof ServiceAdapter) {
-            ServiceAdapter op = (ServiceAdapter) field;
-            return op.deleteInfo(vo);
-        }
-        if (field instanceof BaseMapper) {
-            BaseMapper op = (BaseMapper) field;
-            return op.deleteById((Serializable) vo);
-        }
-        if (field instanceof IDeleteOperation) {
-            IDeleteOperation op = (IDeleteOperation) field;
-            return op.deleteById(vo);
-        }
-        return 0;
-    }
-
-    public static <VO> int update(Object field, VO vo) throws BusinessException {
-        if (field instanceof ServiceAdapter) {
-            ServiceAdapter op = (ServiceAdapter) field;
-            return op.update(vo);
-        }
-        if (field instanceof BaseMapper) {
-            BaseMapper op = (BaseMapper) field;
-            return op.updateById(vo);
-        }
-        if (field instanceof IUpdateInfoOperation) {
-            IUpdateInfoOperation op = (IUpdateInfoOperation) field;
-            return op.updateInfo(vo);
-        }
-        return 0;
-    }
-
-    public static <VO> int updateList(Object field, List<VO> list) throws BusinessException {
-        if (field instanceof ServiceImpl) {
-            ServiceImpl<BaseMapper<VO>, VO> op = (ServiceImpl) field;
-            op.saveOrUpdateBatch(list);
-            return list.size();
-        }
-        if (field instanceof IUpdateListOperation) {
-            IUpdateListOperation op = (IUpdateListOperation) field;
-            return op.updateList(list);
-        }
-        return -1;
-    }
-
-    public static <VO> int deleteList(Object field, List<VO> list) {
-        if (field instanceof ServiceAdapter) {
-            ServiceAdapter op = (ServiceAdapter) field;
-            return op.deleteList(list);
-        }
-        if (field instanceof IUpdateListOperation) {
-            IDeleteListOperation op = (IDeleteListOperation) field;
-            return op.deleteList(list);
-        }
-        if (field instanceof BaseMapper) {
-            BaseMapper<VO> op = (BaseMapper<VO>) field;
-            List<Serializable> idList = list.stream().map(vo -> {
-                if (vo instanceof IIdentity) {
-                    IIdentity<Serializable> identity = (IIdentity) vo;
-                    return identity.getId();
-                }
-                return null;
-            }).collect(Collectors.toList());
-            return op.deleteBatchIds(idList);
-        }
-        return -1;
     }
 
 }
