@@ -33,7 +33,7 @@ public class SariBusiness {
             vo.put("creationDate", new Date());
             vo.put("parseBean", "html");
             vo.put("value", httpStr);
-            List<MapVO> insertList = ListX.as(vo);
+            List<MapVO> insertList = ListX.asList(vo);
             baseService.insertList(insertList);
             list = baseService.queryList(fo);
         }

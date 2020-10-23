@@ -63,7 +63,7 @@ public class ExportUtil {
 			rsVO.setSheetName(exportAnnotation.sheetName());
 		}
 		T[] enumConstants = exportOp.getEnumConstants();
-		List<T> asList = ListX.array(enumConstants);
+		List<T> asList = ListX.asList(enumConstants);
 		rsVO.setCfgList(asList);
 		return rsVO;
 	}
