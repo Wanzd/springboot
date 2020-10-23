@@ -6,7 +6,9 @@ import com.pd.base.exception.BusinessException;
 
 public interface IExportOperation<FO> {
 
-	void export(@Param("fo") FO in) throws BusinessException;
+    void export(@Param("fo") FO in) throws BusinessException;
 
-	<T extends IExportConfigEnum> Class<T> getExportConfig();
+    default <T extends IExportConfigEnum> Class<T> getExportConfig() {
+        return null;
+    }
 }

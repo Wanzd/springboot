@@ -10,10 +10,14 @@ import com.pd.base.exception.BusinessException;
 import com.pd.businessobject.PageVO;
 import com.pd.common.util.CreateBridge;
 import com.pd.common.util.DeleteBridge;
+import com.pd.common.util.ExcelBridge;
+import com.pd.common.util.ExportUtil;
 import com.pd.common.util.QueryBridge;
 import com.pd.common.util.UpdateBridge;
+import com.pd.standard.itf.IExportConfigEnum;
+import com.pd.standard.itf.IExportOperation;
 
-public class ServiceAdapter<FO, VO, Dao> extends ServiceImpl<BaseMapper<VO>, VO> {
+public class ServiceAdapter<FO, VO, Dao> extends ServiceImpl<BaseMapper<VO>, VO> implements IExportOperation<FO> {
     @Autowired
     protected Dao dao;
 
@@ -63,6 +67,11 @@ public class ServiceAdapter<FO, VO, Dao> extends ServiceImpl<BaseMapper<VO>, VO>
 
     public int deleteList(List<VO> list) {
         return DeleteBridge.deleteList(dao, list);
+    }
+
+    @Override
+    public void export(FO fo) throws BusinessException {
+        ExportUtil.export(queryList(fo), getExportConfig());
     }
 
 }
