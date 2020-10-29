@@ -1,5 +1,7 @@
 package com.pd.springboot.service;
 
+import static com.pd.common.util.StaticTool.strToList;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -132,7 +134,7 @@ class Strategy20200802 implements IBuilder<String, List<MapVO>> {
     public List<MapVO> build(String in) throws BusinessException {
         String str = StringX.between(in, "\"engine_search_result\":", ",\"jobid_count\"");
         System.out.println(str);
-        List<MapVO> mapList = StringX.toList(str, MapVO.class);
+        List<MapVO> mapList = strToList(str, MapVO.class);
         List<MapVO> rsList = new ArrayList<>();
         mapList.forEach(vo -> {
 

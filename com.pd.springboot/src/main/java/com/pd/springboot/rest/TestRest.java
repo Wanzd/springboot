@@ -1,5 +1,7 @@
 package com.pd.springboot.rest;
 
+import static com.pd.common.util.StaticTool.objToJsonStr;
+
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pd.base.exception.BusinessException;
 import com.pd.businessobject.MailVO;
-import com.pd.businessobject.SysMenuFO;
-import com.pd.common.util.StringX;
 import com.pd.springboot.adaptor.IRedisAdaptor;
 import com.pd.springboot.dao.ITestDao;
 import com.pd.springboot.service.MailService;
@@ -29,7 +29,7 @@ public class TestRest {
 
     @RequestMapping("/test1")
     public String root() throws BusinessException {
-        return StringX.obj2json(dao.queryList(null));
+        return objToJsonStr(dao.queryList(null));
     }
 
     @RequestMapping("/queryRedis")
