@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.pd.base.exception.BusinessException;
 import com.pd.builderobject.SariInsertListBuilder;
 import com.pd.businessobject.MapVO;
-import com.pd.common.util.ListX;
+import com.pd.common.util.ListFactory;
 import com.pd.common.util.WebUtil;
 import com.pd.springboot.dao.IAppSariDao;
 import com.pd.springboot.service.SariBaseService;
@@ -33,7 +33,7 @@ public class SariBusiness {
             vo.put("creationDate", new Date());
             vo.put("parseBean", "html");
             vo.put("value", httpStr);
-            List<MapVO> insertList = ListX.asList(vo);
+            List<MapVO> insertList = ListFactory.asList(vo);
             baseService.insertList(insertList);
             list = baseService.queryList(fo);
         }

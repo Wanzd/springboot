@@ -21,12 +21,12 @@ public class QueryBridge {
         }
         if (field instanceof BaseMapper) {
             BaseMapper op = (BaseMapper) field;
-            String jsonStr = StringX.from(fo);
+            String jsonStr = StringFactory.from(fo);
             return (VO) op.selectById(JSON.parseObject(jsonStr, HashMap.class));
         }
         if (field instanceof IQueryInfoOperation) {
             IQueryInfoOperation op = (IQueryInfoOperation) field;
-            String jsonStr = StringX.from(fo);
+            String jsonStr = StringFactory.from(fo);
             return (VO) op.queryInfo(fo);
         }
         return null;
@@ -39,7 +39,7 @@ public class QueryBridge {
         }
         if (field instanceof IQueryInfoOperation) {
             IQueryInfoOperation op = (IQueryInfoOperation) field;
-            String jsonStr = StringX.from(fo);
+            String jsonStr = StringFactory.from(fo);
             return op.queryJson(fo);
         }
         return null;

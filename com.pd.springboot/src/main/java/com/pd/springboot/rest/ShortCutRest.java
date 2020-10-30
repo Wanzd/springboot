@@ -19,7 +19,7 @@ import com.pd.businessobject.LookupFO;
 import com.pd.businessobject.MapVO;
 import com.pd.businessobject.SysChartFO;
 import com.pd.businessobject.SysDataSourceFO;
-import com.pd.common.util.StringX;
+import com.pd.common.util.StringFactory;
 import com.pd.springboot.business.DataSourceBusiness;
 import com.pd.springboot.dao.ILookupDao;
 import com.pd.springboot.dao.ISysChartDao;
@@ -61,14 +61,14 @@ public class ShortCutRest {
     @RequestMapping(value = "/LOOKUP:{lookupType}", method = { RequestMethod.POST, RequestMethod.GET })
     @ResponseBody
     public List<ComboVO> queryLookup(@PathParam("") LookupFO fo) throws BusinessException {
-        MapVO mapFO = new MapVO(StringX.from(fo));
+        MapVO mapFO = new MapVO(StringFactory.from(fo));
         return lookupDao.queryCombo(mapFO);
     }
 
     @RequestMapping(value = "/USER:{userName}", method = { RequestMethod.POST, RequestMethod.GET })
     @ResponseBody
     public List<ComboVO> queryUser(@PathParam("") LookupFO fo) throws BusinessException {
-        MapVO mapFO = new MapVO(StringX.from(fo));
+        MapVO mapFO = new MapVO(StringFactory.from(fo));
         return userDao.queryCombo(mapFO);
     }
 }

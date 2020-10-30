@@ -1,14 +1,13 @@
 package com.pd.common.util;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.Reader;
 import java.sql.Clob;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import com.alibaba.fastjson.JSON;
 
@@ -33,47 +32,22 @@ public class StaticTool {
     }
 
     public static String clobToStr(Clob clob) {
-        String reString = "";
-        Reader is;
-        try {
-            is = clob.getCharacterStream();
-            // 得到流
-            BufferedReader br = new BufferedReader(is);
-            String tmp = null;
-            StringBuffer sb = new StringBuffer();
-            while ((tmp = br.readLine()) != null) {// 执行循环将字符串全部取出付值给StringBuffer由StringBuffer转成STRING
-                sb.append(tmp);
-            }
-            reString = sb.toString();
-            return reString;
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        }
-        return BLANK;
+        return StringFactory.clobToStr(clob);
     }
 
     public static String objToStr(Object in) {
-        if (in == null) {
-            return null;
-        }
-        return in.toString();
+        return StringFactory.objToStr(in);
     }
 
     public static String strCap(String str) {
-        if (str == null || str.length() == 0) {
-            return str;
-        }
-        return str.substring(0, 1).toUpperCase() + str.substring(1);
+        return StringFactory.cap(str);
     }
 
     public static String strDecap(String str) {
-        if (str == null || str.length() == 0) {
-            return str;
-        }
-        return str.substring(0, 1).toLowerCase() + str.substring(1);
+        return StringFactory.decap(str);
     }
 
-    public static String dateToStr(Date date, String formatter) {// fitrew3rf4
+    public static String dateToStr(Date date, String formatter) {
         DateFormat df = new SimpleDateFormat(formatter);
         return df.format(date);
     }
@@ -90,5 +64,17 @@ public class StaticTool {
             System.out.println("StringX.toList failed:" + e.getMessage());
         }
         return null;
+    }
+
+    public static void sort(List list) {
+        Collections.sort(list);
+    }
+
+    public static <IN> void sort(List<IN> list, Comparator<IN> comparator) {
+        Collections.sort(list, comparator);
+    }
+
+    public static <IN> Optional<IN> load(IN in) {
+        return Optional.ofNullable(in);
     }
 }

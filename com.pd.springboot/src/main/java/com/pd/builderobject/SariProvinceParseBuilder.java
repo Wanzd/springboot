@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pd.businessobject.MapVO;
-import com.pd.common.util.IntX;
+import com.pd.common.util.IntFactory;
 import com.pd.standard.itf.IBuilder;
 
 public class SariProvinceParseBuilder implements IBuilder<MapVO, List<MapVO>> {
@@ -48,7 +48,7 @@ public class SariProvinceParseBuilder implements IBuilder<MapVO, List<MapVO>> {
 			}
 			eachStr = eachStr.substring(start + 2);
 			end = eachStr.indexOf("例");
-			attrValue = IntX.str(eachStr.substring(0, end));
+			attrValue = IntFactory.str(eachStr.substring(0, end));
 			break;
 		case "death":
 			start = eachStr.indexOf("死亡");
@@ -57,7 +57,7 @@ public class SariProvinceParseBuilder implements IBuilder<MapVO, List<MapVO>> {
 			}
 			eachStr = eachStr.substring(start + 2);
 			end = eachStr.indexOf("例");
-			attrValue = IntX.str(eachStr.substring(0, end));
+			attrValue = IntFactory.str(eachStr.substring(0, end));
 			break;
 		case "heal":
 			start = eachStr.indexOf("治愈");
@@ -66,7 +66,7 @@ public class SariProvinceParseBuilder implements IBuilder<MapVO, List<MapVO>> {
 			}
 			eachStr = eachStr.substring(start + 2);
 			end = eachStr.indexOf("例");
-			attrValue = IntX.str(eachStr.substring(0, end));
+			attrValue = IntFactory.str(eachStr.substring(0, end));
 			break;
 		case "cnt":
 			start = eachStr.indexOf("确诊");
@@ -79,7 +79,7 @@ public class SariProvinceParseBuilder implements IBuilder<MapVO, List<MapVO>> {
 				attrValue = null;
 			}
 			try {
-				attrValue = IntX.str(eachStr.substring(0, end));
+				attrValue = IntFactory.str(eachStr.substring(0, end));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

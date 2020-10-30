@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pd.base.exception.BusinessException;
 import com.pd.businessobject.SysMenuBO;
 import com.pd.businessobject.SysMenuFO;
-import com.pd.common.util.StringX;
+import com.pd.common.util.StringFactory;
 import com.pd.springboot.service.MenuService;
 import com.pd.standard.web.IStandardRest;
 
@@ -20,7 +20,7 @@ public class MenuRest implements IStandardRest<SysMenuFO, SysMenuBO> {
     @RequestMapping("/root")
     // @Cacheable(value = "redis", key = "menuRoot")
     public String root() throws BusinessException {
-        return StringX.from(queryList(new SysMenuFO()));
+        return StringFactory.from(queryList(new SysMenuFO()));
     }
 
 }

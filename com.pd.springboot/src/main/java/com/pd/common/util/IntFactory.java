@@ -1,6 +1,6 @@
 package com.pd.common.util;
 
-public class IntX {
+public class IntFactory {
 	public static int str(String str) {
 		if (str == null) {
 			return 0;

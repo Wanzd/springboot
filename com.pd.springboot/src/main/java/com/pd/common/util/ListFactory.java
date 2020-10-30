@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 import com.pd.businessobject.MapKV;
 import com.pd.businessobject.MapVO;
 
-public class ListX {
+public class ListFactory {
 
     public static <IN> List<IN> asList(IN... vo) {
         return Stream.of(vo).collect(Collectors.toList());

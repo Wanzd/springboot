@@ -18,7 +18,7 @@ import com.pd.base.exception.BusinessException;
 import com.pd.businessobject.MapVO;
 import com.pd.common.util.DoubleX;
 import com.pd.common.util.MapVOX;
-import com.pd.common.util.StringX;
+import com.pd.common.util.StringFactory;
 import com.pd.common.util.WebUtil;
 import com.pd.springboot.dao.IAppJobDao;
 import com.pd.standard.itf.IBuilder;
@@ -132,7 +132,7 @@ class Strategy20200802 implements IBuilder<String, List<MapVO>> {
 
     @Override
     public List<MapVO> build(String in) throws BusinessException {
-        String str = StringX.between(in, "\"engine_search_result\":", ",\"jobid_count\"");
+        String str = StringFactory.between(in, "\"engine_search_result\":", ",\"jobid_count\"");
         System.out.println(str);
         List<MapVO> mapList = strToList(str, MapVO.class);
         List<MapVO> rsList = new ArrayList<>();
