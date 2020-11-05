@@ -43,14 +43,6 @@ public class DeleteBridge {
     }
 
     public static <VO> int deleteList(Object field, List<VO> list) {
-        if (field instanceof ServiceAdapter) {
-            ServiceAdapter op = (ServiceAdapter) field;
-            return op.deleteList(list);
-        }
-        if (field instanceof IUpdateListOperation) {
-            IDeleteListOperation op = (IDeleteListOperation) field;
-            return op.deleteList(list);
-        }
         if (field instanceof BaseMapper) {
             BaseMapper<VO> op = (BaseMapper<VO>) field;
             List<Serializable> idList = list.stream().map(vo -> {
@@ -61,6 +53,14 @@ public class DeleteBridge {
                 return null;
             }).collect(Collectors.toList());
             return op.deleteBatchIds(idList);
+        }
+        if (field instanceof ServiceAdapter) {
+            ServiceAdapter op = (ServiceAdapter) field;
+            return op.deleteList(list);
+        }
+        if (field instanceof IUpdateListOperation) {
+            IDeleteListOperation op = (IDeleteListOperation) field;
+            return op.deleteList(list);
         }
         return -1;
     }

@@ -10,10 +10,16 @@ import java.util.List;
 import java.util.Optional;
 
 import com.alibaba.fastjson.JSON;
+import com.pd.base.exception.BusinessException;
+import com.pd.standard.itf.IQueryInfoOperation;
 
 public class StaticTool {
 
     public final static String BLANK = "";
+
+    public static boolean isNull(Object obj) {
+        return obj == null;
+    }
 
     public static boolean isEmpty(Object obj) {
         if (obj instanceof String) {
@@ -76,5 +82,19 @@ public class StaticTool {
 
     public static <IN> Optional<IN> load(IN in) {
         return Optional.ofNullable(in);
+    }
+
+    public static void assertNull(Object obj, String errorMsg) throws BusinessException {
+        if (obj == null) {
+            throw new BusinessException(errorMsg);
+        }
+    }
+
+    public static <FO, DTO> String queryJson(IQueryInfoOperation<FO, DTO> op, FO fo) throws BusinessException {
+        return QueryBridge.queryJson(op, fo);
+    }
+
+    public static <FO, DTO> DTO queryInfo(IQueryInfoOperation<FO, DTO> op, FO fo) throws BusinessException {
+        return QueryBridge.queryInfo(op, fo);
     }
 }

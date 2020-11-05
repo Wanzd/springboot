@@ -72,6 +72,7 @@ var treeGridImpl = {
 			if (percent > 1) {
 				percent = 1;
 			}
+			var color = "#FFFFFF";
 			if (percent >= 0) {
 				var colorG = Number((255 * (1 - percent)).toFixed())
 						.toString(16);
@@ -242,7 +243,7 @@ var treeGridCols = [[{
 				+ "%";
 		return percent;
 	}
-},  {
+}, {
 	title : '累计',
 	field : 'sick',
 	width : 60,
@@ -252,7 +253,7 @@ var treeGridCols = [[{
 	formatter : function(value, vo) {
 		return vo.sick;
 	}
-},{
+}, {
 	field : 'deathRate',
 	title : '死亡率',
 	rowspan : 1,

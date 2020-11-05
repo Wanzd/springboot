@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.websocket.server.PathParam;
 
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,7 +27,8 @@ public interface IStandardRest<FO, VO> {
     }
 
     @RequestMapping("/queryInfo")
-    default Object queryInfo(@RequestBody(required = false) FO fo) throws BusinessException {
+    default Object queryInfo(@RequestBody(required = false) @Validated FO fo, BindingResult bindingResult)
+            throws BusinessException {
         return QueryBridge.queryInfo(getDefaultField(), fo);
     }
 

@@ -1,5 +1,7 @@
 package com.pd.springboot.business;
 
+import static com.pd.common.util.StaticTool.assertNull;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,13 +30,10 @@ public class DataSourceBusiness {
 
     public Object query(SysDataSourceFO fo) throws BusinessException {
         SysDataSourceBO vo = service.queryInfo(fo);
-        if (vo == null) {
-            return null;
-        }
+        assertNull(vo, "SysDataSourceService.queryInfo return null!");
+        
         IBuilder<SysDataSourceBO, Object> opBuilder = builderMap.get(vo.getType());
-        if (opBuilder == null) {
-            return vo;
-        }
+        assertNull(opBuilder, "vo.getType() not support!");
         return opBuilder.build(vo);
     }
 

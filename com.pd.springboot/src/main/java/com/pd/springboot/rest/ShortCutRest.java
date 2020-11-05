@@ -1,8 +1,9 @@
 package com.pd.springboot.rest;
 
+import static com.pd.common.util.StaticTool.assertNull;
+import static com.pd.common.util.StaticTool.queryJson;
+
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.inject.Inject;
 import javax.websocket.server.PathParam;
@@ -45,11 +46,9 @@ public class ShortCutRest {
 
     @RequestMapping(value = "/CHART:{id}", produces = { "application/json;charset=UTF-8" })
     @ResponseBody
-    public Object query(@PathParam("") SysChartFO fo) throws BusinessException {
-        String jsonData = dao.queryJson(fo);
-        if (jsonData == null) {
-            return jsonData;
-        }
+    public Object queryChart(@PathParam("") SysChartFO fo) throws BusinessException {
+        /* 查询chart配置 */ String jsonData = queryJson(dao, fo);
+        /* 校验chart配置非空 */ assertNull(jsonData, "queryJson return null");
         MapVO rs = new MapVO(jsonData);
         SysDataSourceFO sysDataSourceFO = new SysDataSourceFO();
         sysDataSourceFO.setId(rs.str("dataSourceId"));
