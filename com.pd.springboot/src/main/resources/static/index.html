@@ -13,10 +13,7 @@
 
 <body class="easyui-layout">
 	<div id="cc" class="easyui-layout" style="width: 100%; height: 100%;">
-		<!-- div data-options="region:'north',border:true" style="width: 300px;height:30px;">
-			<img alt="logo" src="images/logo.png" style="padding: 20px 0 0 20px;"> 			<p><a href="test/sync$dao">清理缓存</a>
-		</div-->
-		<div data-options="region:'west',title:'菜单',split:false"
+		<div data-options="region:'west',title:'菜单',split:true"
 			style="width: 200px;">
 			<ul id="menu">
 			</ul>
@@ -26,6 +23,12 @@
 			style="width: 200px;">
 			<iframe id="moduleFrame" src="welcome.html"
 				style="width: 100%; height: 100%"></iframe>
+
+
+		</div>
+		<div data-options="region:'south',title:'日志',split:true "
+			style="width: 200px;height:30%">
+			<div id="logDiv"></div>
 		</div>
 	</div>
 

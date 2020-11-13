@@ -32,8 +32,7 @@ require(['jquery', 'easyui', 'common', 'tree', 'db'], function(jquery, easyui,
 					return s;
 				},
 				onSelect : function(node) {
-					console.log('选中的树的节点信息');
-					console.log(node);
+					common.log('【选中菜单树节点】：' + node.name + '(' + node.id + ')');
 				}
 			});
 		},
@@ -96,7 +95,6 @@ require(['jquery', 'easyui', 'common', 'tree', 'db'], function(jquery, easyui,
 			setTimeout('$build("db.addEvent")', 500);
 		},
 		openModule : function() {
-			console.debug("main.openModule");
 			var treeItem = tree.selected("menu");
 			if (!treeItem) {
 				return;
@@ -104,6 +102,7 @@ require(['jquery', 'easyui', 'common', 'tree', 'db'], function(jquery, easyui,
 			if (treeItem.url == null || treeItem.url == "") {
 				return;
 			}
+			common.log("【打开菜单页面】" + treeItem.url);
 			$('#moduleFrame')[0].src = treeItem.url;
 		}
 	}

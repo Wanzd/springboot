@@ -2,6 +2,30 @@ define(['common'], function() {
 	String.prototype.replaceAll = function(s1, s2) {
 		return this.replace(new RegExp(s1, "gm"), s2);
 	};
+	Date.prototype.format = function(fmt) {
+		var o = {
+			"M+" : this.getMonth() + 1, // 月份
+			"d+" : this.getDate(), // 日
+			"h+" : this.getHours(), // 小时
+			"m+" : this.getMinutes(), // 分
+			"s+" : this.getSeconds(), // 秒
+			"q+" : Math.floor((this.getMonth() + 3) / 3), // 季度
+			"S" : this.getMilliseconds()
+			// 毫秒
+		};
+		if (/(y+)/.test(fmt)) {
+			fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4
+							- RegExp.$1.length));
+		}
+		for (var k in o) {
+			if (new RegExp("(" + k + ")").test(fmt)) {
+				fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1)
+								? (o[k])
+								: (("00" + o[k]).substr(("" + o[k]).length)));
+			}
+		}
+		return fmt;
+	};
 	String.prototype.cap = function() {
 		return this.substr(0, 1).toUpperCase() + this.substr(1)
 	};
@@ -26,8 +50,8 @@ define(['common'], function() {
 
 	var commonImpl = {
 		html : function(url, data) {
-			//console.log("html:" + url);
-			//console.log(data);
+			// console.log("html:" + url);
+			// console.log(data);
 			var rs = $.ajax({
 						url : url,
 						contentType : 'application/json',
@@ -43,7 +67,7 @@ define(['common'], function() {
 		},
 		ajax : function(url, data) {
 			// console.log("ajax:" + url);
-			//			console.log(data);
+			// console.log(data);
 			var rs = $.ajax({
 						url : url,
 						contentType : 'application/json',
@@ -56,7 +80,7 @@ define(['common'], function() {
 				return null;
 			}
 			var rsJson = eval("(" + rs.responseText + ")");
-			//console.log(rsJson);
+			// console.log(rsJson);
 			return rsJson;
 		},
 		parseUrl : function(url) {
@@ -189,6 +213,12 @@ define(['common'], function() {
 					this.init$date$month(vo);
 			}
 
+		},
+		log : function(msg) {
+			console.debug(msg);
+			$("#logDiv").html($("#logDiv").html() + "<br/>"
+					+ "<font color='blue'>" + new Date().format("yyyy-MM-dd hh:mm:ss")
+					+ "</font>" + msg);
 		}
 	};
 	return commonImpl;
