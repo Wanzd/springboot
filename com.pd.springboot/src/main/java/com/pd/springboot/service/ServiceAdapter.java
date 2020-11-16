@@ -7,14 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pd.base.exception.BusinessException;
+import com.pd.businessobject.ComboVO;
 import com.pd.businessobject.PageVO;
 import com.pd.common.util.CreateBridge;
 import com.pd.common.util.DeleteBridge;
-import com.pd.common.util.ExcelBridge;
 import com.pd.common.util.ExportUtil;
 import com.pd.common.util.QueryBridge;
 import com.pd.common.util.UpdateBridge;
-import com.pd.standard.itf.IExportConfigEnum;
 import com.pd.standard.itf.IExportOperation;
 
 public class ServiceAdapter<FO, VO, Dao> extends ServiceImpl<BaseMapper<VO>, VO> implements IExportOperation<FO> {
@@ -45,6 +44,10 @@ public class ServiceAdapter<FO, VO, Dao> extends ServiceImpl<BaseMapper<VO>, VO>
         return QueryBridge.queryCount(dao, fo);
     }
 
+    public int insertInfo(VO vo) {
+        return CreateBridge.insertInfo(dao, vo);
+    }
+
     public int insertList(List<VO> list) throws BusinessException {
         return CreateBridge.insertList(dao, list);
     }
@@ -72,6 +75,10 @@ public class ServiceAdapter<FO, VO, Dao> extends ServiceImpl<BaseMapper<VO>, VO>
     @Override
     public void export(FO fo) throws BusinessException {
         ExportUtil.export(queryList(fo), getExportConfig());
+    }
+
+    public List<ComboVO> queryCombo(FO fo) throws BusinessException {
+        return QueryBridge.queryCombo(dao, fo);
     }
 
 }

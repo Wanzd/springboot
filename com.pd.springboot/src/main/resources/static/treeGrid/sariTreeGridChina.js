@@ -57,6 +57,8 @@ var treeGridImpl = {
 					colorG = "00";
 				}
 				color = "#FF" + colorG + colorG;
+			} else {
+				color = "#FFFFFF";
 			}
 			return 'background-color:' + color + ';color:black;'
 		}

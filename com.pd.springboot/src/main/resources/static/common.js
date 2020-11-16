@@ -217,8 +217,10 @@ define(['common'], function() {
 		log : function(msg) {
 			console.debug(msg);
 			$("#logDiv").html($("#logDiv").html() + "<br/>"
-					+ "<font color='blue'>" + new Date().format("yyyy-MM-dd hh:mm:ss")
-					+ "</font>" + msg);
+					+ "<font color='blue'>"
+					+ new Date().format("yyyy-MM-dd hh:mm:ss") + "</font>"
+					+ msg);
+			$("#logDiv").scrollTop(500);
 		}
 	};
 	return commonImpl;

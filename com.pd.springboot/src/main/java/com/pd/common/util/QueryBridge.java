@@ -1,13 +1,19 @@
 package com.pd.common.util;
 
+import static com.pd.common.util.StaticTool.emptyList;
+import static com.pd.common.util.StaticTool.toObj;
+
 import java.util.HashMap;
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pd.base.exception.BusinessException;
+import com.pd.businessobject.ComboVO;
+import com.pd.businessobject.MapVO;
 import com.pd.businessobject.PageVO;
 import com.pd.springboot.service.ServiceAdapter;
+import com.pd.standard.itf.IQueryComboOperation;
 import com.pd.standard.itf.IQueryInfoOperation;
 import com.pd.standard.itf.IQueryListOperation;
 import com.pd.standard.itf.IQueryPagedListOperation;
@@ -103,6 +109,18 @@ public class QueryBridge {
             return op.selectCount(null);
         }
         return 0;
+    }
+
+    public static <FO> List<ComboVO> queryCombo(Object field, FO fo) throws BusinessException {
+        if (field instanceof ServiceAdapter) {
+            ServiceAdapter op = (ServiceAdapter) field;
+            return op.queryCombo(fo);
+        }
+        if (field instanceof IQueryComboOperation) {
+            IQueryComboOperation op = (IQueryComboOperation) field;
+            return op.queryCombo(toObj(fo, MapVO.class));
+        }
+        return emptyList();
     }
 
 }

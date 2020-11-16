@@ -31,13 +31,13 @@ public class DeleteBridge {
             ServiceAdapter op = (ServiceAdapter) field;
             return op.deleteInfo(vo);
         }
-        if (field instanceof BaseMapper) {
-            BaseMapper op = (BaseMapper) field;
-            return op.deleteById((Serializable) vo);
-        }
         if (field instanceof IDeleteOperation) {
             IDeleteOperation op = (IDeleteOperation) field;
             return op.deleteById(vo);
+        }
+        if (field instanceof BaseMapper) {
+            BaseMapper op = (BaseMapper) field;
+            return op.deleteById((Serializable) vo);
         }
         return 0;
     }

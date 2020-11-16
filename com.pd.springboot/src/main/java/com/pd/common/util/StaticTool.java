@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.alibaba.fastjson.JSON;
@@ -96,5 +97,37 @@ public class StaticTool {
 
     public static <FO, DTO> DTO queryInfo(IQueryInfoOperation<FO, DTO> op, FO fo) throws BusinessException {
         return QueryBridge.queryInfo(op, fo);
+    }
+
+    public static List emptyList() {
+        return Collections.EMPTY_LIST;
+    }
+
+    public static <OUT> OUT toObj(Object in, Class<OUT> outClass) {
+        if (in == null) {
+            return null;
+        }
+        if (in.getClass().equals(outClass)) {
+            return (OUT) in;
+        }
+        String jsonString = null;
+        if (in instanceof String) {
+            jsonString = (String) in;
+        } else {
+            jsonString = JSON.toJSONString(in);
+        }
+        return JSON.parseObject(jsonString, outClass);
+    }
+
+    public static <OUT> OUT attr(Object target, String attrName, Class<OUT> outClass) {
+        if (target instanceof Map) {
+            Map map = (Map) target;
+            Object attr = map.get(attrName);
+            if (attr == null) {
+                return null;
+            }
+            return toObj(attr, outClass);
+        }
+        return Reflects.field(target, outClass, attrName);
     }
 }
