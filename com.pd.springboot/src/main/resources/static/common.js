@@ -220,7 +220,8 @@ define(['common'], function() {
 					+ "<font color='blue'>"
 					+ new Date().format("yyyy-MM-dd hh:mm:ss") + "</font>"
 					+ msg);
-			$("#logDiv").scrollTop(500);
+			var scrollDom = document.getElementById('logDiv');
+			scrollDom.scrollTop = scrollDom.scrollHeight;
 		}
 	};
 	return commonImpl;

@@ -20,11 +20,11 @@ import com.pd.businessobject.LookupFO;
 import com.pd.businessobject.MapVO;
 import com.pd.businessobject.SysChartFO;
 import com.pd.businessobject.SysDataSourceFO;
-import com.pd.common.util.StringFactory;
+import com.pd.common.util.QueryBridge;
 import com.pd.springboot.business.DataSourceBusiness;
-import com.pd.springboot.dao.ILookupDao;
 import com.pd.springboot.dao.ISysChartDao;
 import com.pd.springboot.dao.IUserDao;
+import com.pd.springboot.service.LookupItemService;
 
 /**
  * AI系统
@@ -40,7 +40,7 @@ public class ShortCutRest {
     @Inject
     private DataSourceBusiness dataSourceBusiness;
     @Autowired
-    private ILookupDao lookupDao;
+    private LookupItemService lookupItemService;
     @Autowired
     private IUserDao userDao;
 
@@ -60,14 +60,12 @@ public class ShortCutRest {
     @RequestMapping(value = "/LOOKUP:{lookupType}", method = { RequestMethod.POST, RequestMethod.GET })
     @ResponseBody
     public List<ComboVO> queryLookup(@PathParam("") LookupFO fo) throws BusinessException {
-        MapVO mapFO = new MapVO(StringFactory.from(fo));
-        return lookupDao.queryCombo(mapFO);
+        return QueryBridge.queryCombo(lookupItemService, fo);
     }
 
     @RequestMapping(value = "/USER:{userName}", method = { RequestMethod.POST, RequestMethod.GET })
     @ResponseBody
     public List<ComboVO> queryUser(@PathParam("") LookupFO fo) throws BusinessException {
-        MapVO mapFO = new MapVO(StringFactory.from(fo));
-        return userDao.queryCombo(mapFO);
+        return QueryBridge.queryCombo(userDao, fo);
     }
 }
